@@ -166,13 +166,96 @@
     });
   });
 
-  /* ---------- 9. Отправка заявок ----------
-     ЗАМЕНЫТЕ sendLead() на реальный запрос к CRM / почтовому сервиссу:
-     fetch('https://ваш-эндпоинт', { method:'POST', body: JSON.stringify(data) }) */
+  /* ---------- 9. Отправка заявок на бэкенд (server/server.js) ---------- */
   function sendLead(data) {
-    console.log('[Заявка] место интеграции с CRM:', data);
-    return Promise.resolve();
+    var opts = { method: 'POST' };
+    if (data instanceof FormData) {
+      opts.body = data; /* Content-Type выставит браузер (multipart/form-data) */
+    } else {
+      opts.headers = { 'Content-Type': 'application/json' };
+      opts.body = JSON.stringify(data);
+    }
+    return fetch('/api/leads', opts).then(function (res) {
+      if (!res.ok) {
+        return res.json().catch(function () { return {}; }).then(function (e) {
+          var msg = 'server error ' + res.status;
+          if (e.error === 'file_too_large') msg = 'Файл больше 10 МБ';
+          else if (e.error === 'image_too_heavy') msg = 'Фото слишком тяжёлое (больше 5 МБ)';
+          else if (e.error === 'file_not_allowed') msg = 'Такой файл не поддерживается';
+          throw new Error(msg);
+        });
+      }
+    });
   }
+
+  /* Загрузка эскиза: допустимые типы и максимальный размер (дублируется на сервере) */
+  var FILE_MAX_SIZE = 10 * 1024 * 1024;
+  var IMG_MAX_SIZE = 5 * 1024 * 1024; /* отдельный лимит для фото */
+  var FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'pdf'];
+
+  function isImage(file) {
+    return /^image\/(jpeg|png|webp|gif)$/.test(file.type);
+  }
+
+  /* Сжатие тяжёлых фото перед отправкой: длинная сторона до 2000px, JPEG q=0.85.
+     Фото с телефона (3–8 МБ) превращаются в ~300–700 КБ — качества для эскиза достаточно. */
+  function shrinkImage(file) {
+    var MAX_SIDE = 2000;
+    if (!isImage(file) || file.type === 'image/gif') return Promise.resolve(file);
+
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        URL.revokeObjectURL(url);
+        var scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+        /* Мелкие и лёгкие картинки не трогаем */
+        if (scale >= 1 && file.size <= 1.5 * 1024 * 1024) return resolve(file);
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function (blob) {
+          if (!blob || blob.size >= file.size) return resolve(file); /* не сделали хуже — шлём оригинал */
+          var out = new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' });
+          resolve(out);
+        }, 'image/jpeg', 0.85);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
+  function bindFileInputs() {
+    document.querySelectorAll('input[type=file]').forEach(function (input) {
+      var label = input.closest('.field').querySelector('.file-label');
+      var text = label.querySelector('[data-file-text]');
+      var defaultText = text.textContent;
+
+      input.addEventListener('change', function () {
+        label.classList.remove('is-error', 'is-loaded');
+        var file = input.files && input.files[0];
+        if (!file) { text.textContent = defaultText; return; }
+
+        var ext = file.name.split('.').pop().toLowerCase();
+        var typeOk = FILE_TYPES.indexOf(ext) !== -1 || /^image\/(jpeg|png|webp|gif)$/.test(file.type) || file.type === 'application/pdf';
+        var sizeLimit = isImage(file) ? IMG_MAX_SIZE : FILE_MAX_SIZE;
+        if (!typeOk || file.size > sizeLimit) {
+          input.value = '';
+          label.classList.add('is-error');
+          text.textContent = !typeOk
+            ? 'Такой файл не поддерживается'
+            : (isImage(file)
+              ? 'Фото больше 5 МБ'
+              : 'Файл больше 10 МБ');
+          return;
+        }
+        label.classList.add('is-loaded');
+        text.textContent = file.name.length > 40 ? file.name.slice(0, 37) + '…' : file.name;
+      });
+    });
+  }
+  bindFileInputs();
 
   function bindForms() {
     document.querySelectorAll('form[data-form]').forEach(function (form) {
@@ -197,22 +280,51 @@
         }
         if (!valid) return;
 
-        var payload = { form: form.dataset.form };
-        form.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
-          if (el.type === 'checkbox') payload[el.name || 'consent'] = el.checked;
-          else if (el.type !== 'hidden' || el.value) payload[el.name] = el.value;
-        });
+        var fileInput = form.querySelector('input[type=file]');
+        var file = fileInput && fileInput.files && fileInput.files[0];
 
         var btn = form.querySelector('button[type=submit]');
         var btnText = btn ? btn.textContent : '';
+        /* Блокируем кнопку сразу — на время сжатия фото и отправки (защита от двойного сабмита) */
         if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
+
+        /* Тяжёлое фото сначала сжимаем, затем формируем payload */
+        (file ? shrinkImage(file) : Promise.resolve(null)).then(function (prepared) {
+        var payload;
+        if (prepared) {
+          payload = new FormData();
+          payload.append('file', prepared);
+          form.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
+            if (el.type === 'file') return; /* сам файл уже добавлен выше */
+            if (el.type === 'checkbox') payload.append(el.name || 'consent', el.checked);
+            else payload.append(el.name, el.value);
+          });
+        } else {
+          payload = { form: form.dataset.form };
+          form.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
+            if (el.type === 'file') return;
+            if (el.type === 'checkbox') payload[el.name || 'consent'] = el.checked;
+            else if (el.type !== 'hidden' || el.value) payload[el.name] = el.value;
+          });
+        }
 
         sendLead(payload).then(function () {
           if (btn) { btn.disabled = false; btn.textContent = btnText; }
           form.reset();
+          var fi = form.querySelector('input[type=file]');
+          if (fi) fi.dispatchEvent(new Event('change')); /* вернуть подпись поля загрузки */
           if (form.closest('.modal')) closeModal();
           openModal('modal-thanks');
+        }).catch(function (err) {
+          if (btn) { btn.disabled = false; btn.textContent = btnText; }
+          if (err && /^Файл|файл|Такой|Фото/.test(err.message)) alert(err.message);
+          else alert('Не удалось отправить заявку. Позвоните нам, пожалуйста: +7 (900) 000-00-00');
         });
+        }).catch(function () {
+          /* страховка: если упало сжатие фото — возвращаем кнопку */
+          if (btn) { btn.disabled = false; btn.textContent = btnText; }
+          alert('Не удалось отправить заявку. Позвоните нам, пожалуйста: +7 (900) 000-00-00');
+        }); /* конец shrinkImage().then */
       });
     });
   }

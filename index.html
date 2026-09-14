@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
 
@@ -857,6 +857,14 @@
         <label for="cta-comment">Что хотите построить?</label>
         <textarea id="cta-comment" name="comment" rows="2" placeholder="Например: баня 6×4 с террасой, участок в Пушкино"></textarea>
       </div>
+      <div class="field field--file">
+        <label class="file-label" for="cta-file">
+          <svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>
+          <span class="file-label__text" data-file-text>Прикрепить эскиз или фото участка</span>
+          <span class="file-label__hint">JPG, PNG, WebP, PDF — фото до 5 МБ, файлы до 10 МБ</span>
+        </label>
+        <input type="file" id="cta-file" name="file" accept=".jpg,.jpeg,.png,.webp,.gif,.pdf" hidden>
+      </div>
       <button class="btn btn--terra btn--block" type="submit">Получить расчет</button>
       <label class="consent">
         <input type="checkbox" checked required>
@@ -1034,6 +1042,6 @@
   </div>
 </div>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=3"></script>
 </body>
 </html>

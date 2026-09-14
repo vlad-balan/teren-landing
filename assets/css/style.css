@@ -71,6 +71,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   transition: transform var(--tr), background var(--tr), border-color var(--tr), color var(--tr), box-shadow var(--tr);
 }
 .btn:active { transform: translateY(1px) scale(.99); }
+/* display у .btn перебивает стандартное поведение [hidden] — восстанавливаем */
+[hidden] { display: none !important; }
 .btn--terra { background: var(--terra); color: var(--white); box-shadow: 0 10px 24px rgba(187, 77, 56, .32); }
 .btn--terra:hover { background: var(--terra-600); box-shadow: 0 12px 28px rgba(187, 77, 56, .4); }
 .btn--pine { background: var(--pine); color: var(--white); }
@@ -239,6 +241,23 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   box-shadow: 0 0 0 4px rgba(85, 114, 110, .14);
 }
 .field.is-error input { border-color: var(--terra); background: #FDF3F1; }
+
+/* Поле загрузки файла (эскиз в форме CTA) */
+.file-label {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 13px 16px;
+  border: 1.6px dashed var(--line); border-radius: var(--radius-sm);
+  background: var(--cream); color: var(--ink);
+  cursor: pointer; user-select: none;
+  transition: border-color var(--tr), background var(--tr);
+}
+.file-label:hover { border-color: var(--pine); background: var(--white); }
+.file-label .icon { width: 18px; height: 18px; color: var(--pine); }
+.file-label__text { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+.file-label__hint { font-size: 12px; color: var(--muted); }
+.file-label.is-loaded { border-style: solid; border-color: var(--pine); background: rgba(85, 114, 110, .07); }
+.file-label.is-error { border-color: var(--terra); }
+.file-label.is-error .file-label__text { color: var(--terra); }
 .lead-form .btn { margin-top: 4px; }
 .lead-form__note { margin: 13px 0 12px; font-size: 12.5px; line-height: 1.5; color: var(--muted); text-align: center; }
 
@@ -376,6 +395,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .quiz-option input:focus-visible + span { outline: 3px solid rgba(85, 114, 110, .55); outline-offset: 2px; }
 .quiz__nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; }
 .quiz__nav .btn { padding: 13px 26px; font-size: 15.5px; }
+/* «Назад» на светлой карточке квиза: призрачная кнопка с тёмным текстом */
+.quiz__nav .btn--ghost-dark { color: var(--pine-900); border-color: var(--line); }
+.quiz__nav .btn--ghost-dark:hover { color: var(--pine-900); border-color: var(--pine); background: rgba(85, 114, 110, .08); }
 .quiz-final-note { margin: 14px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
 
 /* ---------- Этапы ---------- */

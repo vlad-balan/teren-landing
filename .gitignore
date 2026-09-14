@@ -6,3 +6,10 @@ desktop.ini
 # Editors
 .vscode/
 .idea/
+
+# Зависимости сервера
+node_modules/
+server/node_modules/
+
+# База заявок и загруженные файлы (персональные данные — не для git)
+server/data/

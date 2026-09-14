@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Заявки — админ-панель</title>
+<style>
+  :root { --pine:#1F3B2C; --terra:#BB4D38; --bg:#F4F0E8; --line:#DDD5C6; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background:var(--bg); color:#222; }
+  header { background:var(--pine); color:#fff; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; }
+  header h1 { margin:0; font-size:18px; font-weight:600; }
+  header button { background:none; border:1px solid rgba(255,255,255,.4); color:#fff; padding:6px 14px; border-radius:6px; cursor:pointer; }
+  .wrap { max-width:1100px; margin:0 auto; padding:20px; }
+  .login { max-width:360px; margin:80px auto; background:#fff; border:1px solid var(--line); border-radius:12px; padding:28px; }
+  .login h2 { margin:0 0 16px; font-size:18px; }
+  .login input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:15px; margin-bottom:12px; }
+  .login button { width:100%; padding:10px; background:var(--terra); color:#fff; border:0; border-radius:8px; font-size:15px; cursor:pointer; }
+  .login .err { color:var(--terra); font-size:13px; min-height:18px; }
+  .toolbar { display:flex; gap:10px; margin-bottom:16px; align-items:center; flex-wrap:wrap; }
+  .toolbar input { padding:8px 12px; border:1px solid var(--line); border-radius:8px; flex:1; min-width:200px; font-size:14px; }
+  .count { color:#666; font-size:14px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:12px; display:flex; gap:16px; }
+  .card.done { opacity:.55; }
+  .card .main { flex:1; min-width:0; }
+  .card .top { display:flex; gap:8px; flex-wrap:wrap; align-items:baseline; }
+  .card .name { font-weight:700; font-size:16px; }
+  .card .phone { font-weight:700; font-size:16px; color:var(--terra); text-decoration:none; }
+  .badge { font-size:11px; padding:2px 8px; border-radius:20px; background:#E8E2D5; color:#555; }
+  .badge.new { background:#FBE3DE; color:var(--terra); }
+  .badge.done { background:#DDE9DC; color:#2E5D3F; }
+  .card .date { color:#999; font-size:12px; margin-left:auto; white-space:nowrap; }
+  .card .msg { margin-top:10px; padding-top:8px; border-top:1px dashed var(--line); }
+  .card .msg--next { opacity:.85; }
+  .card .row { font-size:14px; color:#444; margin-top:6px; }
+  .card .row b { color:#222; }
+  .card .quiz { font-size:13px; color:#666; margin-top:6px; border-left:3px solid var(--line); padding-left:10px; }
+  .card .actions { display:flex; flex-direction:column; gap:6px; }
+  .card .actions button { border:1px solid var(--line); background:#fff; border-radius:6px; padding:6px 10px; font-size:13px; cursor:pointer; white-space:nowrap; }
+  .card .actions .danger { color:var(--terra); }
+  .empty { text-align:center; color:#888; padding:60px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📋 Заявки — Терема Недовитагор</h1>
+  <button id="logout" hidden>Выйти</button>
+</header>
+
+<div class="wrap">
+  <!-- Экран входа -->
+  <form class="login" id="login-form">
+    <h2>Вход в админ-панель</h2>
+    <input type="password" id="password" placeholder="Пароль" autofocus>
+    <div class="err" id="login-err"></div>
+    <button type="submit">Войти</button>
+  </form>
+
+  <!-- Список заявок -->
+  <div id="board" hidden>
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="Поиск по имени, телефону, комментарию...">
+      <span class="count" id="count"></span>
+    </div>
+    <div id="list"></div>
+  </div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+let token = sessionStorage.getItem('adminToken') || '';
+let leads = [];
+
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token, ...(opts.headers || {}) },
+  });
+  if (r.status === 401) { showLogin(); throw new Error('unauthorized'); }
+  return r;
+}
+
+function showLogin() {
+  token = ''; sessionStorage.removeItem('adminToken');
+  $('#login-form').hidden = false; $('#board').hidden = true; $('#logout').hidden = true;
+}
+
+function showBoard() {
+  $('#login-form').hidden = true; $('#board').hidden = false; $('#logout').hidden = false;
+  load();
+}
+
+async function load() {
+  leads = await (await api('/api/leads')).json();
+  render();
+}
+
+function render() {
+  const q = $('#search').value.trim().toLowerCase();
+  const items = q
+    ? leads.filter((l) => [l.name, l.phone, ...l.messages.map((m) => [m.subject, m.comment, m.form, typeof m.quiz === 'string' ? m.quiz : ''].join(' '))].join(' ').toLowerCase().includes(q))
+    : leads;
+  $('#count').textContent = items.length + ' из ' + leads.length;
+  $('#list').innerHTML = items.length ? items.map((l) => `
+    <div class="card ${l.status}">
+      <div class="main">
+        <div class="top">
+          <span class="badge ${l.status}">${l.status === 'new' ? 'новая' : 'обработана'}</span>
+          ${l.appeals > 1 ? `<span class="badge">обращений: ${l.appeals}</span>` : ''}
+          ${l.name ? `<span class="name">${esc(l.name)}</span>` : ''}
+          <a class="phone" href="tel:${esc(l.phone.replace(/\D/g, ''))}">${esc(l.phone)}</a>
+          <span class="date">${esc(l.updated_at || l.created_at)}</span>
+        </div>
+        ${l.messages.map((m, i) => `
+          <div class="msg ${i > 0 ? 'msg--next' : ''}">
+            <div class="row">
+              <b>Обращение ${i + 1}</b> · <span class="badge">${esc(m.form)}</span>
+              ${m.subject ? `<span class="badge">${esc(m.subject)}</span>` : ''}
+              <span class="date">${esc(m.created_at)}</span>
+            </div>
+            ${m.comment ? `<div class="row"><b>Комментарий:</b> ${esc(m.comment)}</div>` : ''}
+            ${m.attachment ? `<div class="row"><b>Вложение:</b> <a href="/api/files/${m.id}?token=${encodeURIComponent(token)}" target="_blank" rel="noopener">${esc(m.attachment_name || 'файл')}</a></div>` : ''}
+            ${m.quiz ? `<div class="quiz">${
+              typeof m.quiz === 'string' ? esc(m.quiz)
+                : Object.entries(m.quiz).map(([k, v]) => `<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join('')
+            }</div>` : ''}
+          </div>`).join('')}
+      </div>
+      <div class="actions">
+        <button onclick="toggleStatus(${l.id}, '${l.status}')">${l.status === 'new' ? '✓ Обработана' : '↩ Вернуть'}</button>
+        <button class="danger" onclick="removeLead(${l.id})">Удалить</button>
+      </div>
+    </div>`).join('') : '<div class="empty">Заявок пока нет</div>';
+}
+
+async function toggleStatus(id, status) {
+  await api('/api/leads/' + id, { method: 'PATCH', body: JSON.stringify({ status: status === 'new' ? 'done' : 'new' }) });
+  load();
+}
+async function removeLead(id) {
+  if (!confirm('Удалить заявку?')) return;
+  await api('/api/leads/' + id, { method: 'DELETE' });
+  load();
+}
+
+$('#login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  $('#login-err').textContent = '';
+  const r = await fetch('/api/admin/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: $('#password').value }),
+  });
+  if (!r.ok) { $('#login-err').textContent = 'Неверный пароль'; return; }
+  token = (await r.json()).token;
+  sessionStorage.setItem('adminToken', token);
+  showBoard();
+});
+
+$('#logout').addEventListener('click', showLogin);
+$('#search').addEventListener('input', render);
+
+if (token) showBoard();
+</script>
+</body>
+</html>
