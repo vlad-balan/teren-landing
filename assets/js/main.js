@@ -32,6 +32,23 @@
     });
   }
 
+  /* На десктопе меню живёт в строке шапки, на мобиле — вне шапки:
+     у шапки backdrop-filter, и fixed-элемент внутри неё позиционируется
+     от полоски шапки, а не от окна (из-за этого меню «выглядывало» сверху). */
+  var navDesktop = window.matchMedia('(min-width: 981px)');
+  function placeNav() {
+    if (!nav) return;
+    if (navDesktop.matches) {
+      var actions = document.querySelector('.header__actions');
+      actions.parentNode.insertBefore(nav, actions);
+      closeMenu();
+    } else {
+      document.body.insertBefore(nav, document.querySelector('main'));
+    }
+  }
+  placeNav();
+  if (navDesktop.addEventListener) navDesktop.addEventListener('change', placeNav);
+
   /* ---------- 3. Тень шапки при скролле ---------- */
   var header = document.getElementById('header');
   var onScroll = function () {
@@ -165,6 +182,100 @@
       if (input.value.replace(/\D/g, '').length <= 1) input.value = '';
     });
   });
+
+  /* ---------- 8a. Кастомные селекты (data-custom) ----------
+     Нативный select остаётся в разметке скрытым — валидация и отправка
+     формы работают как раньше, меняется только внешний вид списка. */
+  function initCustomSelects() {
+    document.querySelectorAll('select[data-custom]').forEach(function (sel) {
+      if (sel.dataset.customized) return;
+      sel.dataset.customized = '1';
+
+      var wrap = document.createElement('div');
+      wrap.className = 'cselect';
+      sel.classList.add('cselect__native');
+      sel.parentNode.insertBefore(wrap, sel);
+      wrap.appendChild(sel);
+
+      var options = Array.prototype.slice.call(sel.options);
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cselect__btn';
+      btn.setAttribute('aria-haspopup', 'listbox');
+      btn.setAttribute('aria-expanded', 'false');
+
+      var list = document.createElement('ul');
+      list.className = 'cselect__list';
+      list.setAttribute('role', 'listbox');
+
+      options.forEach(function (opt, i) {
+        var li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.className = 'cselect__option';
+        li.textContent = opt.textContent;
+        li.addEventListener('click', function () {
+          sel.selectedIndex = i;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+          close();
+        });
+        list.appendChild(li);
+      });
+
+      function syncBtn() {
+        var cur = sel.options[sel.selectedIndex];
+        btn.innerHTML = '<span class="cselect__value">' + cur.textContent + '</span>' +
+          '<svg class="icon cselect__chev" aria-hidden="true"><use href="#i-chevron"/></svg>';
+      }
+      function markSelected() {
+        list.querySelectorAll('.cselect__option').forEach(function (li, i) {
+          li.classList.toggle('is-selected', i === sel.selectedIndex);
+          li.setAttribute('aria-selected', i === sel.selectedIndex ? 'true' : 'false');
+        });
+      }
+      function open() {
+        wrap.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        markSelected();
+      }
+      function close() {
+        wrap.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', function () {
+        wrap.classList.contains('is-open') ? close() : open();
+      });
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          var d = e.key === 'ArrowDown' ? 1 : -1;
+          var i = Math.min(options.length - 1, Math.max(0, sel.selectedIndex + d));
+          sel.selectedIndex = i;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+          if (wrap.classList.contains('is-open')) markSelected();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          wrap.classList.contains('is-open') ? close() : open();
+        }
+      });
+      document.addEventListener('click', function (e) {
+        if (!wrap.contains(e.target)) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && wrap.classList.contains('is-open')) {
+          close();
+          btn.focus();
+        }
+      });
+      sel.addEventListener('change', syncBtn);
+
+      syncBtn();
+      wrap.appendChild(btn);
+      wrap.appendChild(list);
+    });
+  }
+  initCustomSelects();
 
   /* ---------- 9. Отправка заявок на бэкенд (server/server.js) ---------- */
   function sendLead(data) {

@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=4">
+  <link rel="stylesheet" href="assets/css/style.css?v=11">
 </head>
 <body>
 
@@ -160,17 +160,6 @@
       <span class="logo__mark"><svg aria-hidden="true"><use href="#i-logo"/></svg></span>
       <span class="logo__text">ТЕРЕМ<small>строим под&nbsp;ключ</small></span>
     </a>
-    <nav class="nav" id="nav" aria-label="Основная навигация">
-      <ul class="nav__list">
-        <li><a href="#services">Услуги</a></li>
-        <li><a href="#projects">Проекты</a></li>
-        <li><a href="#stages">Этапы</a></li>
-        <li><a href="#reviews">Отзывы</a></li>
-        <li><a href="#faq">Вопросы</a></li>
-        <li><a href="#contacts">Контакты</a></li>
-      </ul>
-      <a class="nav__phone" href="tel:+74951234567"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>+7 (495) 123-45-67</a>
-    </nav>
     <div class="header__actions">
       <a class="header__phone" href="tel:+74951234567"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span>+7 (495) 123-45-67</span></a>
       <button class="btn btn--terra" type="button" data-modal="modal-callback">Рассчитать стоимость</button>
@@ -180,6 +169,20 @@
     </div>
   </div>
 </header>
+
+<!-- Мобильное меню: вне шапки, чтобы fixed считался от окна
+     (backdrop-filter шапки иначе становился контейнером позиционирования) -->
+<nav class="nav" id="nav" aria-label="Основная навигация">
+  <ul class="nav__list">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#projects">Проекты</a></li>
+    <li><a href="#stages">Этапы</a></li>
+    <li><a href="#reviews">Отзывы</a></li>
+    <li><a href="#faq">Вопросы</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a class="nav__phone" href="tel:+74951234567"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>+7 (495) 123-45-67</a>
+</nav>
 
 <main>
 
@@ -208,7 +211,7 @@
         <p class="lead-form__sub">Пришлем смету в&nbsp;3&nbsp;комплектациях: «Эконом», «Стандарт», «Премиум»</p>
         <div class="field">
           <label for="hero-type">Что планируете строить?</label>
-          <select id="hero-type" name="type">
+          <select id="hero-type" name="type" data-custom>
             <option>Дом</option>
             <option selected>Баню</option>
             <option>Беседку</option>
@@ -235,7 +238,7 @@
       </form>
     </div>
   </div>
-  <div class="hero__bg" aria-hidden="true"></div>
+  <img class="hero__bg" src="assets/img/hero-bg.webp?v=2" alt="" aria-hidden="true" decoding="async">
 </section>
 
 <!-- ===================== ПРЕИМУЩЕСТВА ===================== -->
@@ -1042,6 +1045,6 @@
   </div>
 </div>
 
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/main.js?v=5"></script>
 </body>
 </html>
