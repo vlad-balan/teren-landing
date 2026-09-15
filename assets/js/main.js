@@ -259,6 +259,11 @@
 
   function bindForms() {
     document.querySelectorAll('form[data-form]').forEach(function (form) {
+      /* Защита от повторного навешивания: квиз вызывает bindForms() заново
+         на каждом рендере финального шага — без проверки каждая статичная
+         форма получала второй submit-обработчик и заявка уходила дважды */
+      if (form.dataset.bound) return;
+      form.dataset.bound = '1';
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var phone = form.querySelector('input[name=phone]');
@@ -293,6 +298,7 @@
         var payload;
         if (prepared) {
           payload = new FormData();
+          payload.append('form', form.dataset.form);
           payload.append('file', prepared);
           form.querySelectorAll('input[name], select[name], textarea[name]').forEach(function (el) {
             if (el.type === 'file') return; /* сам файл уже добавлен выше */

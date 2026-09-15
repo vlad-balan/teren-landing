@@ -22,6 +22,7 @@
   --line-dark: #3C4A47;   /* границы на тёмном */
 
   --font: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Lora", "Golos Text", Georgia, serif; /* заголовки */
 
   --radius: 18px;
   --radius-sm: 12px;
@@ -130,7 +131,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   color: var(--white);
 }
 .logo__mark svg { width: 27px; height: 27px; }
-.logo__text { display: flex; flex-direction: column; line-height: 1.05; font-weight: 900; font-size: 25px; letter-spacing: .04em; color: var(--pine-900); }
+.logo__text { display: flex; flex-direction: column; line-height: 1.05; font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: .03em; color: var(--pine-900); }
 .logo__text small { font-weight: 600; font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 .logo--footer .logo__text { color: var(--white); }
 .logo--footer .logo__text small { color: var(--muted-dark); }
@@ -180,7 +181,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pine-700);
 }
 .section__eyebrow--light { background: rgba(255, 255, 255, .1); color: #BFCFC8; }
-.section__title { font-size: clamp(26px, 3.6vw, 40px); font-weight: 800; line-height: 1.18; letter-spacing: -.01em; color: var(--pine-900); }
+.section__title { font-family: var(--font-display); font-size: clamp(27px, 3.7vw, 42px); font-weight: 600; line-height: 1.22; letter-spacing: 0; color: var(--pine-900); }
 .section__title--light { color: var(--white); }
 .section__lead { margin-top: 16px; font-size: 18.5px; color: var(--muted); }
 .section__lead--light { color: var(--muted-dark); }
@@ -202,7 +203,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   font-size: 13.5px; font-weight: 700; color: var(--pine-700); box-shadow: var(--shadow-card);
 }
 .hero__eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--terra); }
-.hero__title { font-size: clamp(33px, 4.6vw, 54px); font-weight: 900; line-height: 1.12; letter-spacing: -.015em; color: var(--pine-900); }
+.hero__title { font-family: var(--font-display); font-size: clamp(34px, 4.8vw, 56px); font-weight: 600; line-height: 1.15; letter-spacing: 0; color: var(--pine-900); }
 .hero__title em { font-style: normal; color: var(--terra); position: relative; white-space: nowrap; }
 .hero__title em::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .13em;
@@ -223,7 +224,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   box-shadow: var(--shadow-pop);
 }
 .lead-form--dark { box-shadow: 0 30px 80px rgba(0, 0, 0, .35); }
-.lead-form__title { font-size: clamp(20px, 2vw, 24px); font-weight: 800; color: var(--pine-900); line-height: 1.25; }
+.lead-form__title { font-family: var(--font-display); font-size: clamp(21px, 2.1vw, 25px); font-weight: 600; color: var(--pine-900); line-height: 1.25; }
 .lead-form__sub { margin: 10px 0 20px; font-size: 14.5px; color: var(--muted); }
 .field { margin-bottom: 16px; }
 .field label { display: block; margin-bottom: 7px; font-size: 13.5px; font-weight: 700; color: var(--pine-900); }
@@ -280,7 +281,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   font-size: 44px; font-weight: 900; line-height: 1; letter-spacing: -.02em;
   color: transparent; -webkit-text-stroke: 1.6px rgba(85, 114, 110, .5);
 }
-.adv-card h3 { font-size: 18.5px; font-weight: 800; color: var(--pine-900); margin-bottom: 10px; }
+.adv-card h3 { font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--pine-900); margin-bottom: 10px; }
 .adv-card p { font-size: 15px; color: var(--muted); }
 
 /* ---------- Услуги ---------- */
@@ -303,7 +304,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .srv-card__media svg { width: 42%; height: auto; }
 .srv-card__body { display: flex; flex-direction: column; flex: 1; padding: 22px 22px 20px; }
 .srv-card__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.srv-card__top h3 { font-size: 19.5px; font-weight: 800; color: var(--pine-900); }
+.srv-card__top h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--pine-900); }
 .srv-card__body > p { margin-top: 9px; font-size: 15px; color: var(--muted); }
 .srv-card__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
 .srv-card__meta li { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--pine-700); }
@@ -346,7 +347,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   background: rgba(85, 114, 110, .12); color: var(--pine-700);
   font-size: 12px; font-weight: 700;
 }
-.proj-card h3 { font-size: 18px; font-weight: 800; color: var(--pine-900); line-height: 1.3; }
+.proj-card h3 { font-family: var(--font-display); font-size: 18.5px; font-weight: 600; color: var(--pine-900); line-height: 1.3; }
 .proj-card__specs { margin-top: 10px; display: grid; gap: 4px; }
 .proj-card__specs li { position: relative; padding-left: 18px; font-size: 14px; color: var(--muted); }
 .proj-card__specs li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 7px; height: 2px; border-radius: 2px; background: var(--terra); }
@@ -377,7 +378,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .quiz__progress-bar { flex: 1; height: 7px; border-radius: 99px; background: var(--sand); overflow: hidden; }
 .quiz__progress-bar span { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--pine), var(--terra)); transition: width .45s cubic-bezier(.4, 0, .2, 1); }
 .quiz__body { min-height: 210px; }
-.quiz-step__title { font-size: 20px; font-weight: 800; color: var(--pine-900); line-height: 1.3; }
+.quiz-step__title { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--pine-900); line-height: 1.3; }
 .quiz-step__sub { margin: 8px 0 18px; font-size: 14px; color: var(--muted); }
 .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .quiz-option { position: relative; }
@@ -413,7 +414,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   background: linear-gradient(140deg, var(--pine), var(--pine-700));
   color: var(--white); font-size: 20px; font-weight: 900;
 }
-.stage h3 { font-size: 17.5px; font-weight: 800; color: var(--pine-900); margin-bottom: 9px; }
+.stage h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--pine-900); margin-bottom: 9px; }
 .stage p { font-size: 14.5px; color: var(--muted); }
 
 /* ---------- Страхи ---------- */
@@ -425,10 +426,10 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   transition: background var(--tr), transform var(--tr);
 }
 .fear-card:hover { background: rgba(255, 255, 255, .085); transform: translateY(-3px); }
-.fear-card h3 { font-size: 17px; font-weight: 800; color: #F0B9A5; margin-bottom: 10px; line-height: 1.35; }
+.fear-card h3 { font-family: var(--font-display); font-size: 17.5px; font-weight: 600; color: #F0B9A5; margin-bottom: 10px; line-height: 1.35; }
 .fear-card p { font-size: 14.5px; color: #C9D4CD; }
 .fears__pay { margin-top: 30px; padding: 26px 30px; border-radius: var(--radius); background: rgba(187, 77, 56, .16); border: 1px solid rgba(187, 77, 56, .45); }
-.fears__pay-title { font-size: 17px; font-weight: 800; color: var(--white); margin-bottom: 18px; }
+.fears__pay-title { font-family: var(--font-display); font-size: 17.5px; font-weight: 600; color: var(--white); margin-bottom: 18px; }
 .fears__pay-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .fears__pay-step { display: flex; align-items: center; gap: 14px; }
 .fears__pay-step b {
@@ -617,7 +618,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .modal__close svg { width: 17px; height: 17px; }
 .modal__check { display: grid; place-items: center; width: 74px; height: 74px; margin: 4px auto 18px; border-radius: 50%; background: rgba(96, 163, 121, .15); color: #3E8E5F; }
 .modal__check .icon { width: 34px; height: 34px; }
-.modal__title { font-size: 21px; font-weight: 800; color: var(--pine-900); }
+.modal__title { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--pine-900); }
 .modal__text { margin: 12px 0 20px; font-size: 15px; color: var(--muted); }
 .modal__text--left { text-align: left; display: grid; gap: 12px; }
 
