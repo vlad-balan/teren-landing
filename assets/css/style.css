@@ -34,7 +34,7 @@
 
 /* ---------- Сброс и база ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; } /* clip: без бокового слайда на мобильных, sticky не ломает */
 body {
   margin: 0;
   font-family: var(--font);
@@ -192,7 +192,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   content: ""; position: absolute; inset: 0; z-index: 1;
   /* тёмная вуаль: плотнее слева под текстом, прозрачнее справа — фото читается */
   background:
-    linear-gradient(94deg, rgba(31, 43, 40, .93) 0%, rgba(31, 43, 40, .74) 52%, rgba(31, 43, 40, .42) 100%);
+    linear-gradient(94deg, rgba(31, 43, 40, .84) 0%, rgba(31, 43, 40, .63) 52%, rgba(31, 43, 40, .36) 100%);
   pointer-events: none;
 }
 /* Фото-фон (дом в лесу): дом отзеркален в правую часть кадра,
@@ -201,7 +201,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: 60% 35%;
+  object-position: 38% 42%;
 }
 .hero__inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
 .hero__eyebrow {
@@ -454,12 +454,14 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   background: var(--white); border-radius: var(--radius); border: 1px solid rgba(217, 221, 209, .7);
   box-shadow: var(--shadow-card);
 }
-.stage__num {
+.stage__icon {
   display: inline-grid; place-items: center;
-  width: 46px; height: 46px; margin-bottom: 16px; border-radius: 14px;
+  width: 52px; height: 52px; margin-bottom: 14px; border-radius: 15px;
   background: linear-gradient(140deg, var(--pine), var(--pine-700));
-  color: var(--white); font-size: 20px; font-weight: 900;
+  color: var(--white);
 }
+.stage__icon svg { width: 26px; height: 26px; }
+.stage__step { margin-bottom: 5px; font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--terra); }
 .stage h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--pine-900); margin-bottom: 9px; }
 .stage p { font-size: 14.5px; color: var(--muted); }
 
@@ -713,6 +715,8 @@ body.is-locked { overflow: hidden; }
 
   .hero__inner { grid-template-columns: 1fr; }
   .hero__side { max-width: 520px; }
+  /* на узких экранах кадрируем по дому (после зеркала он в левой части фото) */
+  .hero__bg { object-position: 32% 40%; }
 
   .advantages__grid, .services__grid, .projects__grid, .fears__grid { grid-template-columns: 1fr 1fr; }
   .stages__grid { grid-template-columns: 1fr 1fr; }
@@ -729,6 +733,9 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 640px) {
   body { font-size: 16px; }
   .container { padding: 0 16px; }
+  /* иконки мессенджеров в верхней полосе не влезают на узкий экран
+     и создавали боковой слайд; на мобиле они есть в разделе «Контакты» */
+  .topbar__social { display: none; }
   .header__actions .btn { display: none; }
   .nav__list a { font-size: 18px; }
   .quiz-options { grid-template-columns: 1fr; }
