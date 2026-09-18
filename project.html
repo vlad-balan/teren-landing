@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проект | ТЕРЕМ</title>
+  <meta name="robots" content="noindex">
+  <!-- Страницы проектов генерируются сборкой (tools/build-projects.mjs)
+       в /projects/<id>.html — здесь только редирект со старых ссылок ?id= -->
+</head>
+<body>
+  <p style="font-family: sans-serif; padding: 40px; text-align: center;">
+    Перенаправляем на страницу проекта… <a id="manual" href="/projects.html">Каталог проектов</a>
+  </p>
+  <script>
+    (function () {
+      'use strict';
+      var id = new URLSearchParams(location.search).get('id');
+      location.replace(id ? '/projects/' + encodeURIComponent(id) + '.html' : '/projects.html');
+    })();
+  </script>
+</body>
+</html>

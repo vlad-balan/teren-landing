@@ -682,6 +682,75 @@ body.is-locked { overflow: hidden; }
 }
 
 /* ============================================================
+   ВНУТРЕННИЕ СТРАНИЦЫ: каталог проектов и страница проекта
+   ============================================================ */
+.page-hero { background: var(--sand); padding: clamp(40px, 5vw, 68px) 0 clamp(36px, 4vw, 56px); }
+.breadcrumbs { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; font-size: 13.5px; color: var(--muted); }
+.breadcrumbs a { color: var(--pine-700); font-weight: 600; }
+.breadcrumbs a:hover { color: var(--terra); }
+.breadcrumbs span { display: inline-flex; }
+.breadcrumbs .icon { width: 14px; height: 14px; color: var(--muted); }
+.page-hero .section__title { max-width: 800px; }
+.page-hero .section__lead { max-width: 640px; }
+
+/* Карточка с реальным изображением */
+.proj-card__media--img { display: block; }
+.proj-card__media--img img { width: 100%; height: 100%; object-fit: cover; }
+.proj-card__media--img .badge--hit { position: absolute; top: 12px; left: 12px; z-index: 2; }
+
+/* Страница проекта */
+.pd-hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+.pd-cover { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+.pd-cover img { width: 100%; display: block; }
+.pd-info h1 { font-family: var(--font-display); font-size: clamp(26px, 3.2vw, 38px); font-weight: 600; line-height: 1.2; color: var(--pine-900); margin: 14px 0 16px; }
+.pd-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.pd-tags span { padding: 4px 11px; border-radius: 999px; background: rgba(85, 114, 110, .12); color: var(--pine-700); font-size: 12px; font-weight: 700; }
+.pd-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 22px; }
+.pd-fact { padding: 12px 14px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.pd-fact span { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pd-fact b { font-size: 15.5px; font-weight: 800; color: var(--pine-900); }
+.pd-desc { font-size: 16.5px; color: var(--ink); }
+
+.pd-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 22px; margin-top: 26px; }
+.pd-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 600; color: var(--pine-900); }
+.pd-features .icon { width: 21px; height: 21px; margin-top: 2px; color: #3E8E5F; background: rgba(96, 163, 121, .14); border-radius: 7px; padding: 4px; box-sizing: content-box; }
+
+/* Галерея: клик — открыть лист PDF */
+.pgal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.pgal__item { position: relative; display: block; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-card); transition: transform var(--tr), box-shadow var(--tr); }
+.pgal__item:hover { transform: translateY(-4px); box-shadow: 0 18px 42px rgba(41, 55, 53, .16); }
+.pgal__item img { width: 100%; display: block; background: var(--white); }
+.pgal__cap { display: flex; align-items: center; gap: 8px; padding: 11px 14px; background: var(--white); border-top: 1px solid var(--line); font-size: 13.5px; font-weight: 700; color: var(--pine-700); }
+.pgal__cap .icon { width: 15px; height: 15px; color: var(--terra); }
+
+/* Состав документации */
+.pdocs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.pdocs__group { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+.pdocs__group h3 { font-size: 13px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--pine-700); margin-bottom: 12px; }
+.pdocs__group h3 i { font-style: normal; color: var(--muted); font-weight: 700; }
+.pdocs__group ul { display: grid; gap: 4px; }
+.pdocs__group a { display: flex; align-items: center; gap: 10px; padding: 8px 10px; margin: 0 -10px; border-radius: 9px; font-size: 14.5px; color: var(--ink); transition: background var(--tr); }
+.pdocs__group a:hover { background: rgba(85, 114, 110, .08); }
+.pdocs__group a b { flex: none; width: 58px; font-size: 12.5px; font-weight: 800; color: var(--terra); }
+.pdocs__group a span { flex: 1; }
+.pdocs__group a .icon { width: 15px; height: 15px; color: var(--pine); opacity: 0; transform: translateX(-4px); transition: opacity var(--tr), transform var(--tr); }
+.pdocs__group a:hover .icon { opacity: 1; transform: none; }
+
+/* Полный PDF + CTA на странице проекта */
+.pd-full { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 24px 28px; border-radius: var(--radius); background: var(--pine-900); color: #E7ECE8; }
+.pd-full b { display: block; font-size: 17.5px; font-weight: 800; }
+.pd-full span { font-size: 14px; color: var(--muted-dark); }
+
+@media (max-width: 980px) {
+  .pd-hero { grid-template-columns: 1fr; }
+  .pd-features, .pgal, .pdocs { grid-template-columns: 1fr; }
+  .pd-facts { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .pd-facts { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    АДАПТИВ
    ============================================================ */
 @media (max-width: 1120px) {
