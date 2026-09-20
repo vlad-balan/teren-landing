@@ -129,10 +129,10 @@ for (const p of DATA) {
   </div>
 </section>
 
-<section class="section section--dark">
+<section class="section section--sand">
   <div class="container" style="text-align: center; max-width: 720px;">
-    <h2 class="section__title section__title--light">Хотите такой проект на своём участке?</h2>
-    <p class="section__lead section__lead--light" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету в 3 комплектациях и построим по этому проекту под ключ.</p>
+    <h2 class="section__title">Хотите такой проект на своём участке?</h2>
+    <p class="section__lead" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету в 3 комплектациях и построим по этому проекту под ключ.</p>
     <a class="btn btn--terra" href="/index.html#cta">Получить расчет по проекту</a>
   </div>
 </section>
