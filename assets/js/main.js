@@ -277,6 +277,36 @@
   }
   initCustomSelects();
 
+  /* ---------- 8b. Табы (data-tabs): технологии строительства и пр. ---------- */
+  document.querySelectorAll('[data-tabs]').forEach(function (root) {
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role=tab]'));
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', String(on));
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) {
+          panel.classList.toggle('is-active', on);
+          panel.hidden = !on;
+        }
+      });
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { activate(tab); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (next) { e.preventDefault(); activate(next); next.focus(); }
+      });
+    });
+    activate(tabs[0]);
+  });
+
   /* ---------- 9. Отправка заявок на бэкенд (server/server.js) ---------- */
   function sendLead(data) {
     var opts = { method: 'POST' };

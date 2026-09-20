@@ -17,7 +17,7 @@
   --white: #FFFFFF;
   --ink: #232B29;         /* основной текст */
   --muted: #68736E;       /* второстепенный текст */
-  --muted-dark: #A9B5AE;  /* второстепенный текст на тёмном */
+  --muted-dark: #C0CCC6;  /* второстепенный текст на тёмном/зелёном */
   --line: #D9DDD1;        /* границы карточек */
   --line-dark: #3C4A47;   /* границы на тёмном */
 
@@ -169,9 +169,10 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .section { padding: clamp(64px, 8vw, 104px) 0; }
 .section--sand { background: var(--sand); }
 .section--dark { background:
-  radial-gradient(1000px 480px at 85% -10%, rgba(85, 114, 110, .5), transparent 62%),
-  var(--pine-900);
-  color: #E7ECE8;
+  radial-gradient(720px 460px at 90% -12%, rgba(250, 216, 148, .85), rgba(243, 193, 102, .38) 40%, rgba(232, 163, 61, 0) 66%),
+  radial-gradient(1300px 760px at 68% -6%, rgba(255, 238, 196, .25), transparent 60%),
+  linear-gradient(155deg, #64827C 0%, var(--pine) 48%, #47635E 100%);
+  color: #F2F6F1;
 }
 .section__head { max-width: 780px; margin-bottom: clamp(36px, 5vw, 56px); }
 .section__eyebrow {
@@ -469,21 +470,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .fears__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .fear-card {
   padding: 24px 24px 22px;
-  background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .2);
   border-radius: var(--radius);
   transition: background var(--tr), transform var(--tr);
 }
-.fear-card:hover { background: rgba(255, 255, 255, .085); transform: translateY(-3px); }
-.fear-card h3 { font-family: var(--font-display); font-size: 17.5px; font-weight: 600; color: #F0B9A5; margin-bottom: 10px; line-height: 1.35; }
+.fear-card:hover { background: rgba(255, 255, 255, .13); transform: translateY(-3px); }
+.fear-card h3 { font-family: var(--font-display); font-size: 17.5px; font-weight: 600; color: #F2C063; margin-bottom: 10px; line-height: 1.35; }
 .fear-card p { font-size: 14.5px; color: #C9D4CD; }
-.fears__pay { margin-top: 30px; padding: 26px 30px; border-radius: var(--radius); background: rgba(187, 77, 56, .16); border: 1px solid rgba(187, 77, 56, .45); }
+.fears__pay { margin-top: 30px; padding: 26px 30px; border-radius: var(--radius); background: rgba(232, 163, 61, .13); border: 1px solid rgba(232, 163, 61, .5); }
 .fears__pay-title { font-family: var(--font-display); font-size: 17.5px; font-weight: 600; color: var(--white); margin-bottom: 18px; }
 .fears__pay-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .fears__pay-step { display: flex; align-items: center; gap: 14px; }
 .fears__pay-step b {
   flex: none; display: grid; place-items: center;
   min-width: 64px; height: 52px; padding: 0 10px; border-radius: 12px;
-  background: var(--terra); color: var(--white);
+  background: #E8A33D; color: var(--pine-900);
   font-size: 19px; font-weight: 900;
 }
 .fears__pay-step span { font-size: 13.5px; line-height: 1.45; color: #D5DED8; }
@@ -671,6 +672,61 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .modal__text--left { text-align: left; display: grid; gap: 12px; }
 
 body.is-locked { overflow: hidden; }
+
+/* ---------- Технологии строительства (табы) ---------- */
+.tech__tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+.tech-tab {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border: 1.6px solid var(--line); border-radius: 999px;
+  background: var(--white); color: var(--pine-900);
+  font-weight: 700; font-size: 15.5px;
+  transition: border-color var(--tr), background var(--tr), color var(--tr), box-shadow var(--tr);
+}
+.tech-tab svg { width: 20px; height: 20px; color: var(--pine); transition: color var(--tr); }
+.tech-tab:hover { border-color: var(--pine); }
+.tech-tab.is-active {
+  background: var(--pine); border-color: var(--pine); color: var(--white);
+  box-shadow: 0 10px 24px rgba(85, 114, 110, .32);
+}
+.tech-tab.is-active svg { color: var(--white); }
+
+.tech__panel { display: none; }
+.tech__panel.is-active {
+  display: grid; grid-template-columns: 1.5fr .9fr; gap: clamp(24px, 3.5vw, 52px);
+  animation: tech-in .35s cubic-bezier(.3, .7, .4, 1);
+}
+@keyframes tech-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.tech__body h3 { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 26px); font-weight: 600; line-height: 1.3; color: var(--pine-900); }
+.tech__body > p { margin-top: 12px; font-size: 16.5px; color: var(--ink); }
+.tech__pros { margin-top: 18px; display: grid; gap: 10px; }
+.tech__pros li { display: flex; align-items: flex-start; gap: 10px; font-size: 15.5px; font-weight: 600; color: var(--pine-900); }
+.tech__pros .icon { width: 21px; height: 21px; margin-top: 2px; color: #3E8E5F; background: rgba(96, 163, 121, .14); border-radius: 7px; padding: 4px; box-sizing: content-box; }
+.tech__note { margin: 16px 0 20px; padding: 12px 16px; border-left: 3px solid #E8A33D; border-radius: 0 10px 10px 0; background: rgba(232, 163, 61, .12); font-size: 14px; color: var(--muted); }
+.tech__note b { color: #A97A1E; }
+.tech__side { display: grid; gap: 14px; align-content: start; }
+.tech__media {
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line); box-shadow: var(--shadow-card);
+}
+.tech__media img { width: 100%; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
+.tech__facts {
+  align-self: start; display: grid; gap: 2px;
+  background: var(--pine-900); border-radius: var(--radius);
+  padding: 22px 24px; color: #E7ECE8;
+}
+.tech__facts div { display: grid; gap: 3px; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.tech__facts div:last-child { border-bottom: 0; }
+.tech__facts span { font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted-dark); }
+.tech__facts b { font-size: 16px; font-weight: 800; }
+
+@media (max-width: 980px) {
+  .tech__panel.is-active { grid-template-columns: 1fr; }
+  .tech__tab { flex: 1 1 auto; justify-content: center; }
+}
 
 /* ---------- Появление при скролле ---------- */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.25, .6, .3, 1), transform .7s cubic-bezier(.25, .6, .3, 1); }
