@@ -184,6 +184,9 @@ for (const p of DATA) {
   page = page.replace(/src="assets\//g, 'src="/assets/');
   page = page.replace(/href="index\.html/g, 'href="/index.html');
   page = page.replace(/href="projects\.html/g, 'href="/projects.html');
+  /* …и сразу относительными (../): работают и в подпапке хостинга
+     (GitHub Pages / Netlify), и в корне собственного домена */
+  page = page.replace(/(href|src)="\//g, '$1="../');
 
   fs.writeFileSync(path.join(ROOT, 'projects', `${p.id}.html`), page, 'utf8');
   urls.push(canonical);
