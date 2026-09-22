@@ -193,6 +193,12 @@ for (const p of DATA) {
   console.log('• projects/' + p.id + '.html');
 }
 
+/* ---------- статические страницы (технологии и пр.) ---------- */
+const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html'];
+for (const sp of STATIC_PAGES) {
+  if (fs.existsSync(path.join(ROOT, sp))) urls.push(BASE + '/' + sp);
+}
+
 /* ---------- sitemap.xml ---------- */
 const today = new Date().toISOString().slice(0, 10);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

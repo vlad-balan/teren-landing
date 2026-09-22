@@ -796,6 +796,19 @@ body.is-locked { overflow: hidden; }
   .pd-facts { grid-template-columns: 1fr; }
 }
 
+
+/* ---------- Таблица характеристик (страница технологии) ---------- */
+.spec-table-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-card); }
+.spec-table { width: 100%; border-collapse: collapse; min-width: 580px; }
+.spec-table th, .spec-table td { padding: 13px 18px; text-align: left; vertical-align: top; }
+.spec-table thead th { background: var(--pine); color: var(--white); font-size: 12.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.spec-table thead th:first-child { background: var(--pine-700); }
+.spec-table tbody td { border-top: 1px solid var(--line); color: var(--muted); }
+.spec-table tbody tr:nth-child(even) td { background: rgba(85, 114, 110, .045); }
+.spec-table tbody td:first-child { color: var(--ink); font-weight: 600; }
+.spec-table tbody b { color: var(--pine-700); }
+.spec-note { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 780px; }
+
 /* ============================================================
    АДАПТИВ
    ============================================================ */

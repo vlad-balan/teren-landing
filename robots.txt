@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /server/
 
-Sitemap: https://vlad-balan.github.io/teren-landing/sitemap.xml
+Sitemap: http://localhost:3000/sitemap.xml
