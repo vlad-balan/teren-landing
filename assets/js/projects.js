@@ -41,7 +41,7 @@
   var p = DATA.find(function (x) { return x.id === id; }) || DATA[0];
   if (!p) { root.innerHTML = '<p>Проект не найден.</p>'; return; }
 
-  document.title = p.title + ' — проект | ТЕРЕМ';
+  document.title = p.title + ' — проект | Династия Дерева';
   var crumb = document.querySelector('[data-p="crumb"]');
   if (crumb) crumb.textContent = p.shortTitle;
 

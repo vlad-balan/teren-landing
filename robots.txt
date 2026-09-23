@@ -1,3 +1,4 @@
+# Сайт в разработке: страницы закрыты от индексации (meta noindex + X-Robots-Tag)
 User-agent: *
 Disallow: /server/
 

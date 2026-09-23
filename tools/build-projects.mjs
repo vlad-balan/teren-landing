@@ -156,7 +156,7 @@ for (const p of DATA) {
     "description": ${JSON.stringify(p.description)},
     "image": "${BASE}/${p.cover}",
     "category": ${JSON.stringify(p.type)},
-    "brand": { "@type": "Organization", "name": "ТЕРЕМ" }
+    "brand": { "@type": "Organization", "name": "Династия Дерева" }
   }
   </script>
   <script type="application/ld+json">
@@ -174,7 +174,7 @@ for (const p of DATA) {
   let page = tpl;
   /* контент вместо шаблонного main + seo-голова */
   page = page.replace(/<main>[\s\S]*<\/main>/, main.trim());
-  page = page.replace('<title>Каталог проектов — беседки, дома и бани | ТЕРЕМ</title>', `<title>${esc(p.title)} — чертежи и документация | ТЕРЕМ</title>`);
+  page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.title)} — чертежи и документация | Династия Дерева</title>`);
   page = page.replace('</head>', seoHead + '\n</head>');
   /* статику рендерит сборка — клиентские рендереры не нужны */
   page = page.replace('<script src="assets/js/projects-data.js"></script>', '');
@@ -212,7 +212,8 @@ fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
 console.log('• sitemap.xml (' + urls.length + ' URL)');
 
 /* ---------- robots.txt ---------- */
-const robots = `User-agent: *
+const robots = `# Сайт в разработке: страницы закрыты от индексации (meta noindex + X-Robots-Tag)
+User-agent: *
 Disallow: /server/
 
 Sitemap: ${BASE}/sitemap.xml
