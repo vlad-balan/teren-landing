@@ -71,6 +71,18 @@ function sendLead(data) {
 Подходят: Bitrix24/amoCRM (входящий вебхук), Google Sheets (Apps Script), Formspree,
 Telegram-бот. В `data` уже лежат имя, телефон, тема («Хочу такую» с названием проекта) и ответы квиза.
 
+## SEO: что уже есть и что сделать при деплое
+
+Уже сделано (главная и страницы проектов/технологий):
+- уникальные `title`/`description`, `canonical`, Open Graph + `og-cover.jpg` (1200×630);
+- JSON-LD: `LocalBusiness` (организация, адрес, часы) и `FAQPage` (7 вопросов — шанс на расширенный сниппет в Яндексе и Google);
+- `sitemap.xml` (12 URL) + `robots.txt`, `apple-touch-icon`, `theme-color`.
+
+При покупке домена:
+1. Замените `https://teren-stroy.ru` на реальный домен: в `index.html` (canonical, og:url, JSON-LD), и пересоберите проекты: `node tools/build-projects.mjs https://ваш-домен`.
+2. Зарегистрируйте сайт в [Яндекс.Вебмастере](https://webmaster.yandex.ru) и [Google Search Console](https://search.google.com/search-console) — коды верификации вставьте в `index.html` в закомментированный блок `yandex-verification` / `google-site-verification`, затем добавьте sitemap в оба сервиса.
+3. Поставьте счётчики: Яндекс.Метрика и GA4 — коды перед `</body>` в `index.html` (место помечено комментарием).
+
 ## Как добавить новый проект в каталог
 
 Проекты хранятся в `assets/js/projects-data.js` (массив `TEREM_PROJECTS`).
