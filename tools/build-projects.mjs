@@ -194,7 +194,7 @@ for (const p of DATA) {
 }
 
 /* ---------- статические страницы (технологии и пр.) ---------- */
-const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html'];
+const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html', 'brus.html', 'kombinirovannye-doma.html'];
 for (const sp of STATIC_PAGES) {
   if (fs.existsSync(path.join(ROOT, sp))) urls.push(BASE + '/' + sp);
 }
