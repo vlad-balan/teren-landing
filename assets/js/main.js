@@ -129,7 +129,7 @@
       var hidden = document.getElementById('callback-subject');
       var note = document.getElementById('callback-subject-note');
       if (hidden) hidden.value = subject;
-      if (note) note.textContent = '«' + subject + '» — уточним детали и назовем ориентир по цене за 15 минут.';
+      if (note) note.textContent = '«' + subject + '» — уточним детали и назовем ориентир по цене за 42 минуты.';
     }
     var firstInput = modal.querySelector('input:not([type=hidden])');
     if (firstInput) setTimeout(function () { firstInput.focus(); }, 250);
