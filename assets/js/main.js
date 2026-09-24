@@ -455,6 +455,10 @@
           });
         }
 
+        /* Выбор «Что планируете строить?» — в тему заявки, чтобы был виден
+           в админке сразу (поле type сервером отдельно не хранится) */
+        if (!payload.subject && payload.type) payload.subject = payload.type;
+
         sendLead(payload).then(function () {
           if (btn) { btn.disabled = false; btn.textContent = btnText; }
           form.reset();

@@ -705,6 +705,14 @@ body.is-locked { overflow: hidden; }
   border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--line); box-shadow: var(--shadow-card);
 }
+.tech__media--ph {
+  display: grid; place-items: center; aspect-ratio: 4 / 3;
+  background:
+    repeating-linear-gradient(-45deg, rgba(85, 114, 110, .05) 0 12px, transparent 12px 24px),
+    linear-gradient(160deg, #EDF0E6, #DFE4D6);
+  color: var(--pine-700);
+}
+.tech__media--ph svg { width: 34%; height: auto; }
 .tech__media img { width: 100%; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
 .tech__facts {
   align-self: start; display: grid; gap: 2px;
