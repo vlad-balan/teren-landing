@@ -568,7 +568,7 @@
         '<div class="field"><label for="quiz-phone">Телефон <span aria-hidden="true">*</span></label>' +
         '<input type="tel" id="quiz-phone" name="phone" placeholder="+7 (___) ___-__-__" required autocomplete="tel"></div>' +
         '<button class="btn btn--terra btn--block" type="submit">Получить смету и скидку 5%</button>' +
-        '<p class="quiz-final-note">Смета в 3 комплектациях придет в WhatsApp или Telegram в течение рабочего дня</p>' +
+        '<p class="quiz-final-note">Смета придёт в WhatsApp или Telegram в течение рабочего дня</p>' +
         '<label class="consent"><input type="checkbox" checked required>' +
         '<span>Согласен с <a href="#" data-modal="modal-privacy">политикой конфиденциальности</a></span></label>' +
         '</form>';
