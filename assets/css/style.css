@@ -130,7 +130,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   background: linear-gradient(140deg, var(--pine) 0%, var(--pine-700) 100%);
   color: var(--white);
 }
-.logo__mark svg { width: 27px; height: 27px; }
+.logo__mark svg { width: 30px; height: 30px; }
 .logo__text { display: flex; flex-direction: column; line-height: 1.1; font-family: var(--font-display); font-weight: 700; font-size: 19.5px; letter-spacing: .01em; white-space: nowrap; color: var(--pine-900); }
 .logo__text small { font-weight: 600; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 .logo--footer .logo__text { color: var(--white); }
