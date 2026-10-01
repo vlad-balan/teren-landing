@@ -322,7 +322,6 @@
     <li><a href="#faq">Вопросы</a></li>
     <li><a href="#contacts">Контакты</a></li>
   </ul>
-  <a class="nav__phone" href="tel:+74951234567"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>+7 (495) 123-45-67</a>
 </nav>
 
 <main>
@@ -347,7 +346,8 @@
     </div>
 
     <div class="hero__side reveal">
-      <form class="lead-form lead-form--hero" data-form="hero" novalidate>
+      <button class="btn btn--terra btn--block form-reveal" type="button" data-form-toggle="hero">Оставить заявку</button>
+      <form class="lead-form lead-form--hero collapsible-form" data-form="hero" novalidate>
         <p class="lead-form__title">Договоримся о&nbsp;встрече</p>
         <p class="lead-form__sub">Оставьте контакты — перезвоним в&nbsp;течение 42&nbsp;минут и&nbsp;подберём время визита. В&nbsp;офисе покажем каталоги проектов и&nbsp;образцы материалов</p>
         <div class="field">
@@ -568,7 +568,7 @@
   <div class="container">
     <header class="section__head reveal">
       <p class="section__eyebrow">Каталог проектов</p>
-      <h2 class="section__title">Популярные проекты с&nbsp;ценой и&nbsp;сроком</h2>
+      <h2 class="section__title">Популярные проекты</h2>
       <p class="section__lead">Любой проект адаптируем под ваш участок и задачи: изменим планировку, размер, комплектацию. Каталог наполняется — присылайте свои идеи.</p>
     </header>
 
@@ -1082,37 +1082,6 @@
   </div>
 </section>
 
-<!-- ===================== ЦИФРЫ + КАРТА ===================== -->
-<section class="section section--sand stats" id="stats">
-  <div class="container stats__inner">
-    <div class="stats__col reveal">
-      <p class="section__eyebrow">Мы в цифрах</p>
-      <h2 class="section__title">12 лет строим там, где вас знают по&nbsp;имени</h2>
-      <p class="section__lead">Работаем в Москве и Московской области. Большинство заказов — рекомендации клиентов и их соседей по участку.</p>
-      <dl class="stats__grid">
-        <div class="stat"><dt><span class="counter" data-count="300">0</span>+</dt><dd>объектов сдано</dd></div>
-        <div class="stat"><dt><span class="counter" data-count="1500">0</span>+</dt><dd>довольных клиентов</dd></div>
-        <div class="stat"><dt><span class="counter" data-count="98">0</span>%</dt><dd>клиентов рекомендуют нас</dd></div>
-        <div class="stat"><dt><span class="counter" data-count="5">0</span>&nbsp;лет</dt><dd>гарантии по договору</dd></div>
-      </dl>
-    </div>
-    <!-- Карта-заглушка: заменить на iframe Яндекс.Карт с вашими объектами -->
-    <div class="stats__map reveal" role="img" aria-label="Схема расположения объектов в Московской области">
-      <div class="stats__map-dots" aria-hidden="true">
-        <span style="--x:28%;--y:38%"></span><span style="--x:55%;--y:26%"></span>
-        <span style="--x:70%;--y:48%"></span><span style="--x:40%;--y:60%"></span>
-        <span style="--x:62%;--y:70%"></span><span style="--x:33%;--y:22%"></span>
-        <span style="--x:80%;--y:32%"></span><span style="--x:48%;--y:44%"></span>
-      </div>
-      <div class="stats__map-center" aria-hidden="true">
-        <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
-        <span>Москва и МО</span>
-      </div>
-      <p class="stats__map-note">Здесь будет интерактивная карта сданных объектов</p>
-    </div>
-  </div>
-</section>
-
 <!-- БЛОК ОТЗЫВОВ ВРЕМЕННО СКРЫТ: реальные отзывы добавят позже.
      Вернуть: убрать внешний комментарий, а маркеры [[COMMENT: ]] заменить
      обратно на HTML-комментарии.
@@ -1203,7 +1172,7 @@
   <div class="container container--narrow">
     <header class="section__head reveal">
       <p class="section__eyebrow">Частые вопросы</p>
-      <h2 class="section__title">Отвечаем на&nbsp;то, что спрашивают до&nbsp;звонка</h2>
+      <h2 class="section__title">Нас часто спрашивают</h2>
     </header>
     <div class="faq__list">
       <details class="faq__item reveal">
@@ -1252,7 +1221,8 @@
         <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Фиксация цены на 14 дней — успеете все обдумать</li>
       </ul>
     </div>
-    <form class="lead-form reveal" data-form="cta" novalidate>
+    <button class="btn btn--terra btn--block form-reveal" type="button" data-form-toggle="cta">Получить расчет</button>
+    <form class="lead-form reveal collapsible-form" data-form="cta" novalidate>
       <p class="lead-form__title">Заявка на расчет</p>
       <div class="field">
         <label for="cta-name">Ваше имя</label>
@@ -1309,18 +1279,34 @@
             <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
             <div><b>Мессенджеры</b>
               <div class="contacts__social">
-                <a href="https://wa.me/79001234567" target="_blank" rel="noopener">WhatsApp</a>
-                <a href="https://t.me/username" target="_blank" rel="noopener">Telegram</a>
+                <a class="soc-btn soc-btn--phone" href="tel:+74951234567" aria-label="Позвонить" title="Позвонить">
+                  <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+                </a>
+                <a class="soc-btn soc-btn--max" href="https://max.ru/u/username" target="_blank" rel="noopener" aria-label="Мессенджер MAX" title="MAX">
+                  <img src="images/messagngeers/max.png" alt="" width="46" height="46" loading="lazy">
+                </a>
+                <a class="soc-btn soc-btn--tg" href="https://t.me/username" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+                  <svg class="icon" aria-hidden="true"><use href="#i-tg"/></svg>
+                </a>
+                <a class="soc-btn soc-btn--wa" href="https://wa.me/79001234567" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
+                  <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+                </a>
               </div>
             </div>
           </li>
         </ul>
         <p class="contacts__requisites">ИП Иванов Иван Иванович · ИНН 770000000000<br>Работаем по договору, безналичный и наличный расчет</p>
       </div>
-      <div class="contacts__map reveal">
-        <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%2017-%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4%20%D0%9C%D0%B0%D1%80%D1%8C%D0%B8%D0%BD%D0%BE%D0%B9%20%D0%A0%D0%BE%D1%89%D0%B8%2C%204%D0%BA1&z=16"
-                title="Офис Династия Дерева на карте Москвы"
-                loading="lazy" allowfullscreen></iframe>
+      <div class="contacts__mapcol reveal">
+        <div class="contacts__map">
+          <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%2017-%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4%20%D0%9C%D0%B0%D1%80%D1%8C%D0%B8%D0%BD%D0%BE%D0%B9%20%D0%A0%D0%BE%D1%89%D0%B8%2C%204%D0%BA1&z=16"
+                  title="Офис Династия Дерева на карте Москвы"
+                  loading="lazy" allowfullscreen></iframe>
+        </div>
+        <a class="btn btn--yellow contacts__route" href="https://yandex.ru/maps/?rtext=~55.8091047%2C37.6122031&rtt=auto" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+          Построить маршрут
+        </a>
       </div>
     </div>
   </div>

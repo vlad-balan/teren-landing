@@ -49,6 +49,16 @@
   placeNav();
   if (navDesktop.addEventListener) navDesktop.addEventListener('change', placeNav);
 
+  /* ---------- 2b. На мобильных формы скрыты, форму раскрывает кнопка ---------- */
+  document.querySelectorAll('[data-form-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var form = document.querySelector('form[data-form="' + btn.getAttribute('data-form-toggle') + '"]');
+      if (!form) return;
+      form.classList.add('is-open');
+      btn.hidden = true;
+    });
+  });
+
   /* ---------- 3. Тень шапки при скролле ---------- */
   var header = document.getElementById('header');
   var onScroll = function () {
