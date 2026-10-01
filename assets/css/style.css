@@ -681,6 +681,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .modal__text--left { text-align: left; display: grid; gap: 12px; }
 
 body.is-locked { overflow: hidden; }
+/* overflow:hidden на body отключает position:sticky — шапка уезжает за экран
+   вместе со страницей. На время блокировки (открытое меню/модалка) держим её фиксированной */
+body.is-locked .header { position: fixed; left: 0; right: 0; }
 
 /* ---------- Технологии строительства (табы) ---------- */
 .tech__tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
