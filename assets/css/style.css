@@ -195,12 +195,25 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
   pointer-events: none;
 }
 /* Фото-фон (дом в лесу): дом отзеркален в правую часть кадра,
-   где вуаль прозрачна; фокус кадрирования настраивается object-position */
+   где вуаль прозрачна; фокус кадрирования настраивается object-position.
+   Медленный «Ken Burns»: камера плавно наезжает и дрейфует по кадру.
+   Масштаб всегда >1, чтобы при сдвигах не оголялись края. */
 .hero__bg {
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: 38% 42%;
+  transform: scale(1.03);
+  animation: hero-pan 36s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes hero-pan {
+  0%   { transform: scale(1.03) translate(0, 0); }
+  50%  { transform: scale(1.12) translate(-1.8%, 1.4%); }
+  100% { transform: scale(1.03) translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg { animation: none; transform: none; }
 }
 .hero__inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
 .hero__eyebrow {
