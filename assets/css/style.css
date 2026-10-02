@@ -396,7 +396,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 }
 .proj-card:hover { transform: translateY(-5px); box-shadow: 0 22px 50px rgba(41, 55, 53, .14); }
 .proj-card__media {
-  position: relative; aspect-ratio: 4 / 3;
+  position: relative; aspect-ratio: 16 / 9;
   display: grid; place-items: center;
   background:
     repeating-linear-gradient(45deg, rgba(85, 114, 110, .05) 0 12px, transparent 12px 24px),

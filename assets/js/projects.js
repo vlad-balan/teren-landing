@@ -19,8 +19,7 @@
     return (
       '<article class="proj-card reveal is-visible">' +
       '<a class="proj-card__media proj-card__media--img" href="projects/' + p.id + '.html">' +
-      '<img src="' + p.cover + '" alt="' + p.shortTitle + '" loading="lazy">' +
-      '<span class="badge badge--hit">Готовый проект</span></a>' +
+      '<img src="' + p.cover + '" alt="' + p.shortTitle + '" loading="lazy"></a>' +
       '<div class="proj-card__body">' +
       '<div class="proj-card__tags">' + tags + '</div>' +
       '<h3>' + p.shortTitle + '</h3>' +
