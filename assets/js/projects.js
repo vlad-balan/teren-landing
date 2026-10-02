@@ -10,25 +10,42 @@
     return encodeURI(p.pdfBase + p.pdfPattern.replace('{n}', n));
   }
 
-  /* ---------- Каталог ---------- */
+  /* ---------- Каталог: группы по типам (дома, бани, беседки, гаражи, навесы).
+     Пустые категории не выводятся. ---------- */
   var catalogRoot = document.getElementById('projects-catalog');
   if (catalogRoot) {
-    catalogRoot.innerHTML = DATA.map(function (p) {
+    var order = ['Дом', 'Баня', 'Беседка', 'Гараж', 'Навес'];
+    var labels = { 'Дом': 'Дома', 'Баня': 'Бани', 'Беседка': 'Беседки', 'Гараж': 'Гаражи', 'Навес': 'Навесы' };
+    /* типы, которых нет в списке, не теряем — выводим в конце как есть */
+    DATA.forEach(function (p) {
+      if (order.indexOf(p.type) < 0) order.push(p.type);
+    });
+
+    function card(p) {
       var tags = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
-      var fact = p.facts[0] ? p.facts[0].value : '';
-    return (
-      '<article class="proj-card reveal is-visible">' +
-      '<a class="proj-card__media proj-card__media--img" href="projects/' + p.id + '.html">' +
-      '<img src="' + p.cover + '" alt="' + p.shortTitle + '" loading="lazy"></a>' +
-      '<div class="proj-card__body">' +
-      '<div class="proj-card__tags">' + tags + '</div>' +
-      '<h3>' + p.shortTitle + '</h3>' +
-      '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
-      '<div class="proj-card__foot">' +
-      '<p class="proj-card__price">Рабочая документация<b>' + p.facts[6].value + ' листов</b></p>' +
-      '<a class="link-btn" href="projects/' + p.id + '.html">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
-      '</div></div></article>'
-    );
+      return (
+        '<article class="proj-card reveal is-visible">' +
+        '<a class="proj-card__media proj-card__media--img" href="projects/' + p.id + '.html">' +
+        '<img src="' + p.cover + '" alt="' + p.shortTitle + '" loading="lazy"></a>' +
+        '<div class="proj-card__body">' +
+        '<div class="proj-card__tags">' + tags + '</div>' +
+        '<h3>' + p.shortTitle + '</h3>' +
+        '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
+        '<div class="proj-card__foot">' +
+        '<p class="proj-card__price">Рабочая документация<b>' + p.facts[6].value + ' листов</b></p>' +
+        '<a class="link-btn" href="projects/' + p.id + '.html">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+        '</div></div></article>'
+      );
+    }
+
+    catalogRoot.innerHTML = order.map(function (type) {
+      var items = DATA.filter(function (p) { return p.type === type; });
+      if (!items.length) return '';
+      var label = labels[type] || type;
+      return '<section class="cat-group">' +
+        '<h2 class="cat-group__title">' + label + '</h2>' +
+        '<div class="projects__grid">' + items.map(card).join('') + '</div>' +
+        '</section>';
     }).join('');
   }
 

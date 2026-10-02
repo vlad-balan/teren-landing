@@ -388,6 +388,13 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 
 /* ---------- Проекты ---------- */
 .projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+/* группы каталога: дома, бани, беседки… */
+.cat-group { margin-bottom: clamp(36px, 5vw, 56px); }
+.cat-group:last-child { margin-bottom: 0; }
+.cat-group__title {
+  font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 600; color: var(--heading); margin-bottom: clamp(18px, 2.5vw, 26px);
+}
 .proj-card {
   display: flex; flex-direction: column; overflow: hidden;
   background: var(--card); border-radius: var(--radius); border: 1px solid var(--line);
