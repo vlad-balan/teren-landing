@@ -936,3 +936,6 @@ body.is-locked .header { position: fixed; left: 0; right: 0; }
   .quiz__nav .btn { flex: 1; }
   .projects__more { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- Прямые углы карточек (главная и каталог) ---------- */
+.proj-card, .srv-card, .adv-card, .fear-card, .stage, .review, .stat { border-radius: 0; }
