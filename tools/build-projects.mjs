@@ -198,8 +198,7 @@ fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
 console.log('• sitemap.xml (' + urls.length + ' URL)');
 
 /* ---------- robots.txt ---------- */
-const robots = `# Сайт в разработке: страницы закрыты от индексации (meta noindex + X-Robots-Tag)
-User-agent: *
+const robots = `User-agent: *
 Disallow: /server/
 
 Sitemap: ${BASE}/sitemap.xml

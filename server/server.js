@@ -136,9 +136,6 @@ const upload = multer({
 const app = express();
 app.use(express.json());
 
-/* Пока сайт в разработке — запрещаем индексацию всем роботам (заголовок действует и на PDF) */
-app.use((_req, res, next) => { res.set('X-Robots-Tag', 'noindex, nofollow'); next(); });
-
 /* Папка сервера (база, вложения, исходники) не должна быть доступна публично */
 app.use('/server', (_req, res) => res.status(404).end());
 app.use(express.static(ROOT));
