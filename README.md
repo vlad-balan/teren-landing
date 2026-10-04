@@ -79,7 +79,7 @@ Telegram-бот. В `data` уже лежат имя, телефон, тема (�
 - `sitemap.xml` (12 URL) + `robots.txt`, `apple-touch-icon`, `theme-color`.
 
 При покупке домена:
-1. Замените `https://teren-stroy.ru` на реальный домен: в `index.html` (canonical, og:url, JSON-LD), и пересоберите проекты: `node tools/build-projects.mjs https://ваш-домен`.
+1. Замените `https://derevo-777.ru` на реальный домен: в `index.html` (canonical, og:url, JSON-LD), и пересоберите проекты: `node tools/build-projects.mjs https://ваш-домен`.
 2. Зарегистрируйте сайт в [Яндекс.Вебмастере](https://webmaster.yandex.ru) и [Google Search Console](https://search.google.com/search-console) — коды верификации вставьте в `index.html` в закомментированный блок `yandex-verification` / `google-site-verification`, затем добавьте sitemap в оба сервиса.
 3. Поставьте счётчики: Яндекс.Метрика и GA4 — коды перед `</body>` в `index.html` (место помечено комментарием).
 
