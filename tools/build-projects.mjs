@@ -52,7 +52,7 @@ function fullUrl(p) {
 }
 
 fs.mkdirSync(path.join(ROOT, 'projects'), { recursive: true });
-const urls = [BASE + '/', BASE + '/projects.html'];
+const urls = [BASE + '/', BASE + '/projects'];
 
 for (const p of DATA) {
   const main = `
@@ -61,9 +61,9 @@ for (const p of DATA) {
 <section class="page-hero">
   <div class="container">
     <nav class="breadcrumbs" aria-label="Хлебные крошки">
-      <a href="/index.html">Главная</a>
+      <a href="../">Главная</a>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-      <a href="/projects.html">Каталог проектов</a>
+      <a href="../projects">Каталог проектов</a>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
       <span>${esc(p.shortTitle)}</span>
     </nav>
@@ -119,14 +119,14 @@ for (const p of DATA) {
   <div class="container" style="text-align: center; max-width: 720px;">
     <h2 class="section__title">Хотите такой проект на своём участке?</h2>
     <p class="section__lead" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету и построим по этому проекту под ключ.</p>
-    <a class="btn btn--terra" href="/index.html#cta">Получить расчет по проекту</a>
+    <a class="btn btn--terra" href="../#cta">Получить расчет по проекту</a>
   </div>
 </section>
 
 </main>`;
 
   const desc = p.description.slice(0, 155).trim() + '…';
-  const canonical = `${BASE}/projects/${p.id}.html`;
+  const canonical = `${BASE}/projects/${p.id}`;
   const seoHead = `
   <link rel="canonical" href="${canonical}">
   <meta property="og:title" content="${esc(p.title)} — проект с документацией">
@@ -151,7 +151,7 @@ for (const p of DATA) {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Главная", "item": "${BASE}/" },
-      { "@type": "ListItem", "position": 2, "name": "Каталог проектов", "item": "${BASE}/projects.html" },
+      { "@type": "ListItem", "position": 2, "name": "Каталог проектов", "item": "${BASE}/projects" },
       { "@type": "ListItem", "position": 3, "name": ${JSON.stringify(p.shortTitle)} }
     ]
   }
@@ -170,8 +170,10 @@ for (const p of DATA) {
   page = page.replace(/src="assets\//g, 'src="/assets/');
   page = page.replace(/href="index\.html/g, 'href="/index.html');
   page = page.replace(/href="projects\.html/g, 'href="/projects.html');
-  /* …и сразу относительными (../): работают и в подпапке хостинга
-     (GitHub Pages / Netlify), и в корне собственного домена */
+  /* …и переводим в красивые относительные (../, без .html): работают и
+     в подпапке хостинга (GitHub Pages / Netlify), и в корне домена */
+  page = page.replace(/(href)="\/index\.html(#[^"]*)?"/g, '$1="../$2"');
+  page = page.replace(/(href)="\/projects\.html"/g, '$1="../projects"');
   page = page.replace(/(href|src)="\//g, '$1="../');
 
   fs.writeFileSync(path.join(ROOT, 'projects', `${p.id}.html`), page, 'utf8');
@@ -190,7 +192,7 @@ const today = new Date().toISOString().slice(0, 10);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${BASE}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>
-  <url><loc>${BASE}/projects.html</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
+  <url><loc>${BASE}/projects</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
 ${urls.slice(2).map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`).join('\n')}
 </urlset>
 `;

@@ -10,13 +10,13 @@
 </head>
 <body>
   <p style="font-family: sans-serif; padding: 40px; text-align: center;">
-    Перенаправляем на страницу проекта… <a id="manual" href="/projects.html">Каталог проектов</a>
+    Перенаправляем на страницу проекта… <a id="manual" href="/projects">Каталог проектов</a>
   </p>
   <script>
     (function () {
       'use strict';
       var id = new URLSearchParams(location.search).get('id');
-      location.replace(id ? '/projects/' + encodeURIComponent(id) + '.html' : '/projects.html');
+      location.replace(id ? '/projects/' + encodeURIComponent(id) : '/projects');
     })();
   </script>
 </body>

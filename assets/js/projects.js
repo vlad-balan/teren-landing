@@ -25,7 +25,7 @@
       var tags = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
       return (
         '<article class="proj-card reveal is-visible">' +
-        '<a class="proj-card__media proj-card__media--img" href="projects/' + p.id + '.html">' +
+        '<a class="proj-card__media proj-card__media--img" href="projects/' + p.id + '">' +
         '<img src="' + p.cover + '" alt="' + p.shortTitle + '" loading="lazy"></a>' +
         '<div class="proj-card__body">' +
         '<div class="proj-card__tags">' + tags + '</div>' +
@@ -33,7 +33,7 @@
         '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
         '<div class="proj-card__foot">' +
         '<p class="proj-card__price">Рабочая документация<b>' + p.facts[6].value + ' листов</b></p>' +
-        '<a class="link-btn" href="projects/' + p.id + '.html">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+        '<a class="link-btn" href="projects/' + p.id + '">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
         '</div></div></article>'
       );
     }

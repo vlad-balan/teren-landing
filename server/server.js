@@ -138,6 +138,17 @@ app.use(express.json());
 
 /* Папка сервера (база, вложения, исходники) не должна быть доступна публично */
 app.use('/server', (_req, res) => res.status(404).end());
+
+/* Красивые адреса без .html: /projects, /projects/<id>, /brus и т.д. */
+app.use((req, res, next) => {
+  if (req.method !== 'GET' || req.path === '/' || path.extname(req.path)) return next();
+  let decoded;
+  try { decoded = decodeURIComponent(req.path); } catch { return next(); }
+  const candidate = path.join(ROOT, decoded + '.html');
+  if (candidate.startsWith(ROOT) && fs.existsSync(candidate)) return res.sendFile(candidate);
+  next();
+});
+
 app.use(express.static(ROOT));
 
 /* Простые сессии админки (в памяти — перезапуск сервера разлогинивает) */
