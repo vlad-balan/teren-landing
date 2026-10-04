@@ -105,26 +105,12 @@ for (const p of DATA) {
 
 <section class="section">
   <div class="container">
-    <header class="section__head">
-      <p class="section__eyebrow">Состав рабочей документации</p>
-      <h2 class="section__title">Все листы проекта — онлайн</h2>
-      <p class="section__lead">Каждый лист открывается отдельным PDF-файлом. Хотите всё сразу — скачайте полный комплект одной кнопкой ниже.</p>
-    </header>
-    <div class="pdocs">
-      ${p.docs.map((g) => `
-      <div class="pdocs__group">
-        <h3>${esc(g.group)} <i>${g.sheets.length}</i></h3>
-        <ul>${g.sheets.map((s) => `
-          <li><a href="${sheetUrl(p, s.n)}" target="_blank" rel="noopener"><b>${sheetLabel(p)} ${s.n}</b><span>${esc(s.t)}</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`).join('')}
-        </ul>
-      </div>`).join('')}
-    </div>
-    <div style="margin-top: 26px;" class="pd-full">
+    <div class="pd-full">
       <div>
         <b>Полный комплект документации</b>
         <span>один PDF со всеми ${p.facts[6] ? p.facts[6].value : ''} листами</span>
       </div>
-      <a class="btn btn--terra" href="${fullUrl(p)}" target="_blank" rel="noopener">Скачать PDF · ${esc(p.pdfFullSize)}</a>
+      <a class="btn btn--yellow" href="${fullUrl(p)}" target="_blank" rel="noopener">Скачать PDF · ${esc(p.pdfFullSize)}</a>
     </div>
   </div>
 </section>
