@@ -1269,8 +1269,7 @@ window.TEREM_PROJECTS = [
       { src: 'assets/img/projects/banya-04-m/viz-1.webp', caption: 'Визуализация', sheet: 27 },
       { src: 'assets/img/projects/banya-04-m/viz-2.webp', caption: 'Визуализация', sheet: 29 },
       { src: 'assets/img/projects/banya-04-m/viz-3.webp', caption: 'Визуализация', sheet: 26 },
-      { src: 'assets/img/projects/banya-04-m/viz-4.webp', caption: 'Визуализация', sheet: 30 },
-      { src: 'assets/img/projects/banya-04-m/viz-5.webp', caption: 'Визуализация', sheet: 1 }
+      { src: 'assets/img/projects/banya-04-m/viz-4.webp', caption: 'Визуализация', sheet: 30 }
     ],
     docs: [
       {
