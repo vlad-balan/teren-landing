@@ -157,6 +157,7 @@ for (const p of DATA) {
 
   const seoHead = `
   <link rel="canonical" href="${canonical}">
+  <meta name="description" content="${esc(desc)}">
   <meta name="keywords" content="${esc(keywords)}">
   <meta property="og:title" content="${esc(p.title)} — проект с документацией">
   <meta property="og:description" content="${esc(desc)}">
@@ -190,8 +191,9 @@ for (const p of DATA) {
   /* контент вместо шаблонного main + seo-голова */
   page = page.replace(/<main>[\s\S]*<\/main>/, main.trim());
   page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.title)} — чертежи и документация | Династия Дерева</title>`);
-  /* шаблонный keywords из projects.html не нужен — у проекта свой */
-  page = page.replace(/<meta name="keywords" content="[^"]*">\n/, '');
+  /* шаблонные description и keywords из projects.html не нужны — у проекта свои */
+  page = page.replace(/<meta name="description" content="[^"]*">(\r?\n)?/, '');
+  page = page.replace(/<meta name="keywords" content="[^"]*">(\r?\n)?/, '');
   page = page.replace('</head>', seoHead + '\n</head>');
   /* статику рендерит сборка — клиентские рендереры не нужны */
   page = page.replace('<script src="assets/js/projects-data.js"></script>', '');
