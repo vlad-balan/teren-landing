@@ -59,6 +59,28 @@
     });
   });
 
+  /* ---------- 2c. Главная: в каждой категории каталога не больше 9 карточек.
+     Лишние скрываются, вместо них — кнопка «Посмотреть все проекты» ---------- */
+  var homeCatalog = document.getElementById('home-catalog');
+  if (homeCatalog) {
+    var HOME_MAX = 9;
+    var homeOverflow = false;
+    homeCatalog.querySelectorAll('.cat-group').forEach(function (group) {
+      group.querySelectorAll('.proj-card').forEach(function (card, i) {
+        if (i >= HOME_MAX) { card.hidden = true; homeOverflow = true; }
+      });
+    });
+    if (homeOverflow) {
+      homeCatalog.insertAdjacentHTML('afterend',
+        '<div class="home-catalog-more">' +
+        '<a class="btn btn--yellow" href="projects">Каталог всех готовых проектов</a>' +
+        '</div>');
+      /* дубль кнопки «Каталог проектов» ниже больше не нужен */
+      var dup = document.querySelector('.projects__more a[href="projects"]');
+      if (dup) dup.hidden = true;
+    }
+  }
+
   /* ---------- 3. Тень шапки при скролле ---------- */
   var header = document.getElementById('header');
   var onScroll = function () {
