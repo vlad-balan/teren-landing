@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /server/
 
-Sitemap: https://derevo-777.ru/sitemap.xml
+Sitemap: http://localhost:3000/sitemap.xml

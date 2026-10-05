@@ -127,8 +127,37 @@ for (const p of DATA) {
 
   const desc = p.description.slice(0, 155).trim() + '…';
   const canonical = `${BASE}/projects/${p.id}`;
+
+  /* Ключевые слова: название, тип, теги, габариты + общие фразы (10–20 шт.) */
+  const plural = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаражи', 'Навес': 'навесы' };
+  const gen = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаража', 'Навес': 'навеса' };
+  const acc = { 'Дом': 'дом', 'Баня': 'баню', 'Беседка': 'беседку', 'Гараж': 'гараж', 'Навес': 'навес' };
+  const low = p.type.toLowerCase();
+  const dims = (p.facts[0] && /габарит|площад/i.test(p.facts[0].label))
+    ? p.facts[0].value.toLowerCase().replace(/\s*м$/, '').replace(/×/g, 'x')
+    : null;
+  const kw = [
+    `${p.title.toLowerCase()} проект`,
+    `проект ${plural[p.type] || low}`,
+    `готовый проект ${plural[p.type] || low}`,
+    `${plural[p.type] || low} под ключ`,
+    `купить проект ${gen[p.type] || low}`,
+    `${low} с документацией`,
+    `рабочий проект ${gen[p.type] || low}`,
+    p.shortTitle.toLowerCase(),
+    `${p.shortTitle.toLowerCase()} чертежи`,
+    `заказать ${acc[p.type] || low} под ключ`,
+  ];
+  p.tags.forEach(t => {
+    const tl = t.toLowerCase();
+    if (tl !== low) kw.push(`${low} ${tl}`);
+  });
+  if (dims) kw.push(`проект ${plural[p.type] || low} ${dims}`);
+  const keywords = [...new Set(kw)].slice(0, 20).join(', ');
+
   const seoHead = `
   <link rel="canonical" href="${canonical}">
+  <meta name="keywords" content="${esc(keywords)}">
   <meta property="og:title" content="${esc(p.title)} — проект с документацией">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:type" content="website">
@@ -161,6 +190,8 @@ for (const p of DATA) {
   /* контент вместо шаблонного main + seo-голова */
   page = page.replace(/<main>[\s\S]*<\/main>/, main.trim());
   page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.title)} — чертежи и документация | Династия Дерева</title>`);
+  /* шаблонный keywords из projects.html не нужен — у проекта свой */
+  page = page.replace(/<meta name="keywords" content="[^"]*">\n/, '');
   page = page.replace('</head>', seoHead + '\n</head>');
   /* статику рендерит сборка — клиентские рендереры не нужны */
   page = page.replace('<script src="assets/js/projects-data.js"></script>', '');
