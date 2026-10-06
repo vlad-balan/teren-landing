@@ -20,7 +20,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const BASE = (process.argv[2] || process.env.BASE_URL || 'http://localhost:3000').replace(/\/+$/, '');
+/* Боевой домен по умолчанию; переопределить можно аргументом или BASE_URL */
+const BASE = (process.argv[2] || process.env.BASE_URL || 'https://derevo-777.ru').replace(/\/+$/, '');
 
 /* projects-data.js — браузерный скрипт (window.TEREM_PROJECTS=...),
    подсовываем глобальный window и читаем данные */
