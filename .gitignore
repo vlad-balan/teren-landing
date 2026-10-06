@@ -1,18 +1,17 @@
-# OS
-Thumbs.db
-desktop.ini
-.DS_Store
+
 
 # Editors
-.vscode/
-.idea/
-
-# Зависимости сервера
-node_modules/
-server/node_modules/
-
+# OS
 # База заявок и загруженные файлы (персональные данные — не для git)
-server/data/
-
+# Зависимости сервера
 # Пароль админки — не для git
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+deploy/beget/admin-config.php
+desktop.ini
+node_modules/
 server/.env
+server/data/
+server/node_modules/
