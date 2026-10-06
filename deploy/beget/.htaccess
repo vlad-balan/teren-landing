@@ -1,6 +1,10 @@
 # ===== Династия Дерева — правила для Beget (Apache) =====
 RewriteEngine On
 
+# /projects — реальная папка; отключаем авто-редирект на слэш,
+# чтобы Apache не перебивал реврайт на projects.html
+DirectorySlash Off
+
 # --- Служебная папка сервера (база, вложения, исходники) закрыта от веба ---
 RewriteRule ^server/ - [F,L]
 
