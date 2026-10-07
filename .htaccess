@@ -12,6 +12,7 @@ RewriteRule \.env$ - [F,L]
 
 # --- API заявок и админки (те же адреса, что в Node-версии) ---
 RewriteRule ^api/admin/login$ api.php?act=login [L]
+RewriteRule ^api/statuses$ api.php?act=statuses [L,QSA]
 RewriteRule ^api/files/([0-9]+)$ api.php?act=file&id=$1 [L,QSA]
 RewriteRule ^api/leads/([0-9]+)$ api.php?act=lead&id=$1 [L,QSA]
 RewriteRule ^api/leads/?$ api.php?act=leads [L,QSA]

@@ -129,11 +129,15 @@ function showBoard() {
 }
 
 async function load() {
+  /* заявки — обязательны, статусы при сбое берутся из запасного списка */
   try {
-    const [l, s] = await Promise.all([api('/api/leads'), api('/api/statuses')]);
+    const l = await api('/api/leads');
     leads = await l.json();
-    statuses = await s.json();
   } catch (e) { if (e.message !== 'unauthorized') throw e; return; }
+  try {
+    const s = await api('/api/statuses');
+    statuses = await s.json();
+  } catch (e) { statuses = FALLBACK_STATUSES; }
   render();
 }
 
