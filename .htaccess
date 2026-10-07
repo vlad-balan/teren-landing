@@ -5,8 +5,10 @@ RewriteEngine On
 # чтобы Apache не перебивал реврайт на projects.html
 DirectorySlash Off
 
-# --- Служебная папка сервера (база, вложения, исходники) закрыта от веба ---
+# --- Служебное закрыто от веба ---
 RewriteRule ^server/ - [F,L]
+RewriteRule ^\.git - [F,L]
+RewriteRule \.env$ - [F,L]
 
 # --- API заявок и админки (те же адреса, что в Node-версии) ---
 RewriteRule ^api/admin/login$ api.php?act=login [L]
