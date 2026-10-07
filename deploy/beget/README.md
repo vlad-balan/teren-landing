@@ -13,9 +13,9 @@
 | Страницы проектов | `projects/` | `public_html/projects/` |
 | Документация PDF | `Планы/` | `public_html/Планы/` (~60 МБ, грузить целиком) |
 | SEO | `sitemap.xml`, `robots.txt` | `public_html/` |
-| **Бэкенд заявок** | `deploy/beget/api.php` | `public_html/api.php` |
-| **Админ-панель** | `deploy/beget/admin.html` | `public_html/admin.html` |
-| **Реврайты и кэш** | `deploy/beget/.htaccess` | `public_html/.htaccess` |
+| **Бэкенд заявок** | `api.php` (в корне репозитория) | `public_html/api.php` |
+| **Админ-панель** | `admin.html` | `public_html/admin.html` |
+| **Реврайты и кэш** | `.htaccess` | `public_html/.htaccess` |
 
 **НЕ переносим:** `CNAME` (файл GitHub Pages), `server/*.js`, `server/package*.json`,
 `server/.env`, `node_modules/`, `logo-concepts*.html` (черновики логотипа).
