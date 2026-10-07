@@ -25,6 +25,15 @@ if (is_file(__DIR__ . '/admin-config.php')) {
 $DB_FILE    = getenv('DB_FILE')    ?: __DIR__ . '/server/data/leads.db';
 $UPLOAD_DIR = getenv('UPLOAD_DIR') ?: __DIR__ . '/server/data/uploads';
 
+/* Статусы CRM: порядок массива = порядок колонок в админке.
+   Добавить/переименовать/убрать статус — править только здесь. */
+$STATUS_META = [
+    ['id' => 'new', 'title' => 'Новая'],
+    ['id' => 'in_progress', 'title' => 'В работе'],
+    ['id' => 'lost', 'title' => 'Отвалился'],
+    ['id' => 'success', 'title' => 'Успешно'],
+];
+
 /* ---------- База (схема как в server/server.js) ---------- */
 if (!is_dir(dirname($DB_FILE))) { mkdir(dirname($DB_FILE), 0775, true); }
 if (!is_dir($UPLOAD_DIR))       { mkdir($UPLOAD_DIR, 0775, true); }
@@ -41,6 +50,7 @@ $pdo->exec("
     phone_norm TEXT    NOT NULL UNIQUE,
     name       TEXT,
     status     TEXT    NOT NULL DEFAULT 'new',
+    attention  INTEGER NOT NULL DEFAULT 0,
     created_at TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
     updated_at TEXT
   );
@@ -60,6 +70,7 @@ $pdo->exec("
 /* Миграция: колонки вложений/объединения для старых баз */
 foreach ([
     ['leads', 'phone_norm', 'TEXT'], ['leads', 'updated_at', 'TEXT'],
+    ['leads', 'attention', 'INTEGER NOT NULL DEFAULT 0'],
     ['lead_messages', 'attachment', 'TEXT'], ['lead_messages', 'attachment_name', 'TEXT'],
 ] as [$tbl, $col, $type]) {
     $has = $pdo->prepare("PRAGMA table_info($tbl)");
@@ -68,6 +79,8 @@ foreach ([
         $pdo->exec("ALTER TABLE $tbl ADD COLUMN $col $type");
     }
 }
+/* Миграция статусов: старый 'done' теперь называется 'success' */
+$pdo->exec("UPDATE leads SET status = 'success' WHERE status = 'done'");
 
 /* ---------- Помощники ---------- */
 function json_out(array $data, int $code = 200): void {
@@ -172,7 +185,8 @@ if ($act === 'leads' && $method === 'POST') {
         $lead = ['id' => (int)$pdo->lastInsertId()];
     } else {
         $newName = $newName !== null && $newName !== $lead['name'] ? $newName : $lead['name'];
-        $upd = $pdo->prepare("UPDATE leads SET name = ?, phone = ?, updated_at = datetime('now', 'localtime') WHERE id = ?");
+        /* флаг внимания: по существующей заявке новое обращение (⚠) */
+        $upd = $pdo->prepare("UPDATE leads SET name = ?, phone = ?, attention = 1, updated_at = datetime('now', 'localtime') WHERE id = ?");
         $upd->execute([$newName, mb_substr($phone, 0, 30), $lead['id']]);
     }
 
@@ -198,10 +212,15 @@ if ($act === 'leads' && $method === 'POST') {
 /* Всё дальше — только для админа */
 require_admin();
 
+/* --- Список статусов CRM (для колонок админки) --- */
+if ($act === 'statuses' && $method === 'GET') {
+    json_out($STATUS_META);
+}
+
 /* --- Список контактов со всеми обращениями --- */
 if ($act === 'leads' && $method === 'GET') {
     $leads = $pdo->query(
-        "SELECT l.id, l.phone, l.name, l.status, l.created_at, l.updated_at,
+        "SELECT l.id, l.phone, l.name, l.status, l.attention, l.created_at, l.updated_at,
                 COUNT(m.id) AS appeals
          FROM leads l LEFT JOIN lead_messages m ON m.lead_id = l.id
          GROUP BY l.id ORDER BY l.updated_at DESC, l.id DESC"
@@ -224,12 +243,28 @@ if ($act === 'leads' && $method === 'GET') {
     json_out($leads);
 }
 
-/* --- Статус заявки --- */
+/* --- Статус и/или флаг внимания заявки --- */
 if ($act === 'lead' && $method === 'PATCH') {
-    $id   = (int)($_GET['id'] ?? 0);
-    $b    = body();
-    $status = ($b['status'] ?? '') === 'done' ? 'done' : 'new';
-    $pdo->prepare('UPDATE leads SET status = ? WHERE id = ?')->execute([$status, $id]);
+    $id = (int)($_GET['id'] ?? 0);
+    $b  = body();
+    $sets = [];
+    $vals = [];
+    if (array_key_exists('status', $b)) {
+        $okStatus = false;
+        foreach ($STATUS_META as $s) {
+            if ($s['id'] === $b['status']) { $okStatus = true; break; }
+        }
+        if (!$okStatus) { json_out(['error' => 'bad_status'], 400); }
+        $sets[] = 'status = ?';
+        $vals[] = $b['status'];
+    }
+    if (array_key_exists('attention', $b)) {
+        $sets[] = 'attention = ?';
+        $vals[] = $b['attention'] ? 1 : 0;
+    }
+    if (!count($sets)) { json_out(['error' => 'nothing_to_update'], 400); }
+    $vals[] = $id;
+    $pdo->prepare('UPDATE leads SET ' . implode(', ', $sets) . ' WHERE id = ?')->execute($vals);
     json_out(['ok' => true]);
 }
 

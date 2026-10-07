@@ -6,40 +6,64 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Заявки — админ-панель</title>
 <style>
-  :root { --pine:#1F3B2C; --terra:#BB4D38; --bg:#F4F0E8; --line:#DDD5C6; }
+  :root { --pine:#1F3B2C; --terra:#BB4D38; --bg:#F4F0E8; --line:#DDD5C6; --warn:#E8890C; }
   * { box-sizing: border-box; }
   body { margin:0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background:var(--bg); color:#222; }
   header { background:var(--pine); color:#fff; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; }
   header h1 { margin:0; font-size:18px; font-weight:600; }
   header button { background:none; border:1px solid rgba(255,255,255,.4); color:#fff; padding:6px 14px; border-radius:6px; cursor:pointer; }
-  .wrap { max-width:1100px; margin:0 auto; padding:20px; }
+  .wrap { max-width:1400px; margin:0 auto; padding:20px; }
+  .toolbar { display:flex; gap:10px; margin-bottom:16px; align-items:center; flex-wrap:wrap; }
+  .toolbar input { padding:8px 12px; border:1px solid var(--line); border-radius:8px; flex:1; min-width:200px; font-size:14px; }
+  .count { color:#666; font-size:14px; }
+
+  /* --- Канбан --- */
+  .board { display:flex; gap:14px; align-items:flex-start; overflow-x:auto; padding-bottom:20px; }
+  .col { flex:1; min-width:250px; background:#EAE3D4; border-radius:12px; padding:10px; max-height:calc(100vh - 170px); display:flex; flex-direction:column; }
+  .col-head { display:flex; align-items:center; gap:6px; padding:2px 4px 10px; font-weight:700; font-size:14px; color:var(--pine); }
+  .col-head .att { color:var(--warn); font-weight:900; }
+  .col-head .col-count { margin-left:auto; background:rgba(255,255,255,.7); border-radius:20px; padding:1px 9px; font-size:12px; color:#666; }
+  .col-body { overflow-y:auto; min-height:40px; }
+  .lead-card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:8px; cursor:pointer; transition:transform .1s; }
+  .lead-card:hover { transform:translateY(-1px); border-color:#c9bfa8; }
+  .lead-card .top { display:flex; align-items:center; gap:6px; }
+  .lead-card .att { color:var(--warn); font-weight:900; font-size:15px; }
+  .lead-card .name { font-weight:700; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lead-card .phone { display:block; font-weight:700; font-size:14px; color:var(--terra); text-decoration:none; margin-top:2px; }
+  .lead-card .meta { color:#999; font-size:12px; margin-top:4px; }
+  .lead-card .snippet { color:#666; font-size:12px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .col-empty { color:#999; font-size:13px; text-align:center; padding:14px 0; }
+
+  /* --- Попап заявки --- */
+  .overlay { position:fixed; inset:0; background:rgba(30,25,15,.5); display:flex; align-items:flex-start; justify-content:center; padding:30px 16px; overflow-y:auto; z-index:50; }
+  .modal { background:#fff; border-radius:14px; max-width:660px; width:100%; padding:22px 24px; position:relative; }
+  .modal .close { position:absolute; top:12px; right:14px; border:0; background:none; font-size:22px; cursor:pointer; color:#999; }
+  .modal h2 { margin:0 26px 4px 0; font-size:19px; }
+  .modal .m-phone { font-weight:700; color:var(--terra); text-decoration:none; font-size:16px; }
+  .modal .m-badges { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:10px 0 4px; }
+  .modal .m-row { display:flex; align-items:center; gap:10px; margin:12px 0 4px; }
+  .modal .m-row label { font-size:13px; color:#666; }
+  .modal select { padding:7px 10px; border:1px solid var(--line); border-radius:8px; font-size:14px; }
+  .modal .att-badge { color:var(--warn); font-weight:700; font-size:13px; }
+  .badge { font-size:11px; padding:2px 8px; border-radius:20px; background:#E8E2D5; color:#555; }
+  .badge.new { background:#FBE3DE; color:var(--terra); }
+  .badge.in_progress { background:#FDF3D7; color:#9a6b00; }
+  .badge.lost { background:#ECECEC; color:#777; }
+  .badge.success { background:#DDE9DC; color:#2E5D3F; }
+  .modal .history { margin-top:12px; border-top:1px solid var(--line); }
+  .modal .msg { padding:10px 0; border-bottom:1px dashed var(--line); }
+  .modal .msg:last-child { border-bottom:0; }
+  .modal .row { font-size:14px; color:#444; margin-top:6px; }
+  .modal .row b { color:#222; }
+  .modal .quiz { font-size:13px; color:#666; margin-top:6px; border-left:3px solid var(--line); padding-left:10px; }
+  .modal .danger { color:var(--terra); border:1px solid var(--line); background:#fff; border-radius:8px; padding:8px 14px; font-size:13px; cursor:pointer; margin-top:14px; }
   .login { max-width:360px; margin:80px auto; background:#fff; border:1px solid var(--line); border-radius:12px; padding:28px; }
   .login h2 { margin:0 0 16px; font-size:18px; }
   .login input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:15px; margin-bottom:12px; }
   .login button { width:100%; padding:10px; background:var(--terra); color:#fff; border:0; border-radius:8px; font-size:15px; cursor:pointer; }
   .login .err { color:var(--terra); font-size:13px; min-height:18px; }
-  .toolbar { display:flex; gap:10px; margin-bottom:16px; align-items:center; flex-wrap:wrap; }
-  .toolbar input { padding:8px 12px; border:1px solid var(--line); border-radius:8px; flex:1; min-width:200px; font-size:14px; }
-  .count { color:#666; font-size:14px; }
-  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:12px; display:flex; gap:16px; }
-  .card.done { opacity:.55; }
-  .card .main { flex:1; min-width:0; }
-  .card .top { display:flex; gap:8px; flex-wrap:wrap; align-items:baseline; }
-  .card .name { font-weight:700; font-size:16px; }
-  .card .phone { font-weight:700; font-size:16px; color:var(--terra); text-decoration:none; }
-  .badge { font-size:11px; padding:2px 8px; border-radius:20px; background:#E8E2D5; color:#555; }
-  .badge.new { background:#FBE3DE; color:var(--terra); }
-  .badge.done { background:#DDE9DC; color:#2E5D3F; }
-  .card .date { color:#999; font-size:12px; margin-left:auto; white-space:nowrap; }
-  .card .msg { margin-top:10px; padding-top:8px; border-top:1px dashed var(--line); }
-  .card .msg--next { opacity:.85; }
-  .card .row { font-size:14px; color:#444; margin-top:6px; }
-  .card .row b { color:#222; }
-  .card .quiz { font-size:13px; color:#666; margin-top:6px; border-left:3px solid var(--line); padding-left:10px; }
-  .card .actions { display:flex; flex-direction:column; gap:6px; }
-  .card .actions button { border:1px solid var(--line); background:#fff; border-radius:6px; padding:6px 10px; font-size:13px; cursor:pointer; white-space:nowrap; }
-  .card .actions .danger { color:var(--terra); }
-  .empty { text-align:center; color:#888; padding:60px 0; }
+  .empty { text-align:center; color:#888; padding:40px 0; }
+  [hidden] { display:none !important; }
 </style>
 </head>
 <body>
@@ -49,7 +73,6 @@
 </header>
 
 <div class="wrap">
-  <!-- Экран входа -->
   <form class="login" id="login-form">
     <h2>Вход в админ-панель</h2>
     <input type="password" id="password" placeholder="Пароль" autofocus>
@@ -57,20 +80,31 @@
     <button type="submit">Войти</button>
   </form>
 
-  <!-- Список заявок -->
   <div id="board" hidden>
     <div class="toolbar">
       <input type="search" id="search" placeholder="Поиск по имени, телефону, комментарию...">
       <span class="count" id="count"></span>
     </div>
-    <div id="list"></div>
+    <div class="board" id="cols"></div>
   </div>
+</div>
+
+<!-- Попап заявки -->
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" id="modal"></div>
 </div>
 
 <script>
 const $ = (s) => document.querySelector(s);
+const FALLBACK_STATUSES = [
+  { id: 'new', title: 'Новая' },
+  { id: 'in_progress', title: 'В работе' },
+  { id: 'lost', title: 'Отвалился' },
+  { id: 'success', title: 'Успешно' },
+];
 let token = sessionStorage.getItem('adminToken') || '';
 let leads = [];
+let statuses = FALLBACK_STATUSES;
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -86,6 +120,7 @@ async function api(path, opts = {}) {
 function showLogin() {
   token = ''; sessionStorage.removeItem('adminToken');
   $('#login-form').hidden = false; $('#board').hidden = true; $('#logout').hidden = true;
+  $('#overlay').hidden = true;
 }
 
 function showBoard() {
@@ -94,58 +129,131 @@ function showBoard() {
 }
 
 async function load() {
-  leads = await (await api('/api/leads')).json();
+  try {
+    const [l, s] = await Promise.all([api('/api/leads'), api('/api/statuses')]);
+    leads = await l.json();
+    statuses = await s.json();
+  } catch (e) { if (e.message !== 'unauthorized') throw e; return; }
   render();
+}
+
+function statusTitle(id) {
+  const s = statuses.find((x) => x.id === id);
+  return s ? s.title : id;
+}
+
+function matches(lead, q) {
+  const hay = [lead.name, lead.phone, ...lead.messages.map((m) =>
+    [m.subject, m.comment, m.form, typeof m.quiz === 'string' ? m.quiz : ''].join(' '))].join(' ').toLowerCase();
+  return hay.includes(q);
 }
 
 function render() {
   const q = $('#search').value.trim().toLowerCase();
-  const items = q
-    ? leads.filter((l) => [l.name, l.phone, ...l.messages.map((m) => [m.subject, m.comment, m.form, typeof m.quiz === 'string' ? m.quiz : ''].join(' '))].join(' ').toLowerCase().includes(q))
-    : leads;
-  $('#count').textContent = items.length + ' из ' + leads.length;
-  $('#list').innerHTML = items.length ? items.map((l) => `
-    <div class="card ${l.status}">
-      <div class="main">
-        <div class="top">
-          <span class="badge ${l.status}">${l.status === 'new' ? 'новая' : 'обработана'}</span>
-          ${l.appeals > 1 ? `<span class="badge">обращений: ${l.appeals}</span>` : ''}
-          ${l.name ? `<span class="name">${esc(l.name)}</span>` : ''}
-          <a class="phone" href="tel:${esc(l.phone.replace(/\D/g, ''))}">${esc(l.phone)}</a>
-          <span class="date">${esc(l.updated_at || l.created_at)}</span>
-        </div>
-        ${l.messages.map((m, i) => `
-          <div class="msg ${i > 0 ? 'msg--next' : ''}">
-            <div class="row">
-              <b>Обращение ${i + 1}</b> · <span class="badge">${esc(m.form)}</span>
-              ${m.subject ? `<span class="badge">${esc(m.subject)}</span>` : ''}
-              <span class="date">${esc(m.created_at)}</span>
-            </div>
-            ${m.comment ? `<div class="row"><b>Комментарий:</b> ${esc(m.comment)}</div>` : ''}
-            ${m.attachment ? `<div class="row"><b>Вложение:</b> <a href="/api/files/${m.id}?token=${encodeURIComponent(token)}" target="_blank" rel="noopener">${esc(m.attachment_name || 'файл')}</a></div>` : ''}
-            ${m.quiz ? `<div class="quiz">${
-              typeof m.quiz === 'string' ? esc(m.quiz)
-                : Object.entries(m.quiz).map(([k, v]) => `<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join('')
-            }</div>` : ''}
-          </div>`).join('')}
+  const visible = q ? leads.filter((l) => matches(l, q)) : leads;
+  $('#count').textContent = visible.length + ' из ' + leads.length;
+
+  $('#cols').innerHTML = statuses.map((s) => {
+    const items = visible.filter((l) => l.status === s.id);
+    const hasAtt = items.some((l) => l.attention);
+    return `
+    <div class="col">
+      <div class="col-head">
+        ${hasAtt ? '<span class="att">⚠</span>' : ''}
+        <span>${esc(s.title)}</span>
+        <span class="col-count">${items.length}</span>
       </div>
-      <div class="actions">
-        <button onclick="toggleStatus(${l.id}, '${l.status}')">${l.status === 'new' ? '✓ Обработана' : '↩ Вернуть'}</button>
-        <button class="danger" onclick="removeLead(${l.id})">Удалить</button>
+      <div class="col-body">
+        ${items.length ? items.map(leadCard).join('') : '<div class="col-empty">пусто</div>'}
       </div>
-    </div>`).join('') : '<div class="empty">Заявок пока нет</div>';
+    </div>`;
+  }).join('');
 }
 
-async function toggleStatus(id, status) {
-  await api('/api/leads/' + id, { method: 'PATCH', body: JSON.stringify({ status: status === 'new' ? 'done' : 'new' }) });
-  load();
+function leadCard(l) {
+  const last = l.messages[l.messages.length - 1];
+  return `
+  <div class="lead-card" onclick="openCard(${l.id})">
+    <div class="top">
+      ${l.attention ? '<span class="att" title="Новое обращение по этой заявке">⚠</span>' : ''}
+      <span class="name">${esc(l.name || 'Без имени')}</span>
+    </div>
+    <a class="phone" href="tel:${esc(l.phone.replace(/\D/g, ''))}" onclick="event.stopPropagation()">${esc(l.phone)}</a>
+    <div class="meta">${l.appeals > 1 ? 'обращений: ' + l.appeals + ' · ' : ''}${esc(l.updated_at || l.created_at)}</div>
+    ${last && (last.comment || last.subject) ? `<div class="snippet">${esc(last.comment || last.subject)}</div>` : ''}
+  </div>`;
 }
+
+/* --- Попап с историей --- */
+function openCard(id) {
+  const lead = leads.find((l) => l.id === id);
+  if (!lead) return;
+  $('#overlay').hidden = false;
+  renderModal(lead);
+  if (lead.attention) {
+    lead.attention = 0;
+    api('/api/leads/' + id, { method: 'PATCH', body: JSON.stringify({ attention: 0 }) })
+      .then(render).catch(() => {});
+  }
+}
+
+function renderModal(lead) {
+  $('#modal').innerHTML = `
+    <button class="close" onclick="closeModal()" title="Закрыть">×</button>
+    <h2>${esc(lead.name || 'Без имени')}</h2>
+    <a class="m-phone" href="tel:${esc(lead.phone.replace(/\D/g, ''))}">${esc(lead.phone)}</a>
+    <div class="m-badges">
+      <span class="badge ${esc(lead.status)}">${esc(statusTitle(lead.status))}</span>
+      ${lead.appeals > 1 ? `<span class="badge">обращений: ${lead.appeals}</span>` : ''}
+      ${lead.attention ? '<span class="att-badge">⚠ новое обращение</span>' : ''}
+      <span class="badge">в работе с ${esc(lead.created_at)}</span>
+    </div>
+    <div class="m-row">
+      <label for="m-status">Статус:</label>
+      <select id="m-status" onchange="setStatus(${lead.id}, this.value)">
+        ${statuses.map((s) => `<option value="${esc(s.id)}" ${s.id === lead.status ? 'selected' : ''}>${esc(s.title)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="history">
+      ${lead.messages.length ? lead.messages.map((m, i) => `
+        <div class="msg">
+          <div class="row">
+            <b>Обращение ${i + 1}</b> · <span class="badge">${esc(m.form)}</span>
+            ${m.subject ? `<span class="badge">${esc(m.subject)}</span>` : ''}
+            <span class="date" style="color:#999;font-size:12px">${esc(m.created_at)}</span>
+          </div>
+          ${m.comment ? `<div class="row"><b>Комментарий:</b> ${esc(m.comment)}</div>` : ''}
+          ${m.attachment ? `<div class="row"><b>Вложение:</b> <a href="/api/files/${m.id}?token=${encodeURIComponent(token)}" target="_blank" rel="noopener">${esc(m.attachment_name || 'файл')}</a></div>` : ''}
+          ${m.quiz ? `<div class="quiz">${
+            typeof m.quiz === 'string' ? esc(m.quiz)
+              : Object.entries(m.quiz).map(([k, v]) => `<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join('')
+          }</div>` : ''}
+        </div>`).join('') : '<div class="empty">История пуста</div>'}
+    </div>
+    <button class="danger" onclick="removeLead(${lead.id})">Удалить контакт</button>`;
+}
+
+function closeModal() { $('#overlay').hidden = true; }
+$('#overlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
+
+async function setStatus(id, status) {
+  await api('/api/leads/' + id, { method: 'PATCH', body: JSON.stringify({ status }) });
+  const lead = leads.find((l) => l.id === id);
+  if (lead) { lead.status = status; }
+  render();
+  const lead2 = leads.find((l) => l.id === id);
+  if (!$('#overlay').hidden) renderModal(lead2);
+}
+
 async function removeLead(id) {
-  if (!confirm('Удалить заявку?')) return;
+  if (!confirm('Удалить заявку со всей историей?')) return;
   await api('/api/leads/' + id, { method: 'DELETE' });
-  load();
+  leads = leads.filter((l) => l.id !== id);
+  closeModal();
+  render();
 }
 
+/* --- Вход --- */
 $('#login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   $('#login-err').textContent = '';

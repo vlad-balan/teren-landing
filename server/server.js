@@ -24,6 +24,16 @@ const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const DB_FILE = process.env.DB_FILE || path.join(__dirname, 'data', 'leads.db');
 
+/* Статусы CRM: порядок массива = порядок колонок в админке.
+   Добавить/переименовать/убрать статус — править только здесь. */
+const STATUS_META = [
+  { id: 'new', title: 'Новая' },
+  { id: 'in_progress', title: 'В работе' },
+  { id: 'lost', title: 'Отвалился' },
+  { id: 'success', title: 'Успешно' },
+];
+const STATUSES = STATUS_META.map((s) => s.id);
+
 /* ---------- База данных ---------- */
 fs.mkdirSync(path.dirname(DB_FILE), { recursive: true });
 
@@ -34,7 +44,8 @@ db.exec(`
     phone      TEXT    NOT NULL,          -- телефон в отображаемом виде
     phone_norm TEXT    NOT NULL UNIQUE,   -- только цифры, ключ объединения заявок
     name       TEXT,                      -- имя (обновляется на последнее непустое)
-    status     TEXT    NOT NULL DEFAULT 'new',  -- new | done
+    status     TEXT    NOT NULL DEFAULT 'new',
+    attention  INTEGER NOT NULL DEFAULT 0, -- 1 = новое обращение по старой заявке (⚠)
     created_at TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
     updated_at TEXT                          -- дата последнего обращения
   );
@@ -58,6 +69,13 @@ for (const col of ['attachment', 'attachment_name']) {
   const has = db.prepare(`PRAGMA table_info(lead_messages)`).all().some((c) => c.name === col);
   if (!has) db.exec(`ALTER TABLE lead_messages ADD COLUMN ${col} TEXT`);
 }
+
+/* Миграция: флаг внимания (⚠ новое обращение по существующей заявке) */
+const hasAttention = db.prepare(`PRAGMA table_info(leads)`).all().some((c) => c.name === 'attention');
+if (!hasAttention) db.exec(`ALTER TABLE leads ADD COLUMN attention INTEGER NOT NULL DEFAULT 0`);
+
+/* Миграция статусов: старый 'done' теперь называется 'success' */
+db.exec(`UPDATE leads SET status = 'success' WHERE status = 'done'`);
 
 /* Миграция старой базы (до объединения заявок): перенос полей в историю */
 const hasOldColumns = db
@@ -212,13 +230,14 @@ app.post('/api/leads', (req, res) => {
         .run(phone.slice(0, 30), phoneNorm, b.name ? String(b.name).slice(0, 200) : null);
       lead = { id: info.lastInsertRowid, name: b.name ? String(b.name).slice(0, 200) : null };
     } else {
-      /* Контакт существует: обновляем имя (если пришло непустое и новое) и дату обращения */
+      /* Контакт существует: обновляем имя (если пришло непустое и новое), дату
+         и ставим флаг внимания — по этой заявке новое обращение (⚠) */
       const newName =
         b.name && String(b.name).trim() && String(b.name) !== lead.name
           ? String(b.name).slice(0, 200)
           : lead.name;
       db.prepare(
-        `UPDATE leads SET name = ?, phone = ?, updated_at = datetime('now', 'localtime') WHERE id = ?`
+        `UPDATE leads SET name = ?, phone = ?, attention = 1, updated_at = datetime('now', 'localtime') WHERE id = ?`
       ).run(newName, phone.slice(0, 30), lead.id);
     }
 
@@ -260,7 +279,7 @@ app.get('/api/files/:messageId', requireAdmin, (req, res) => {
 app.get('/api/leads', requireAdmin, (req, res) => {
   const leads = db
     .prepare(
-      `SELECT l.id, l.phone, l.name, l.status, l.created_at, l.updated_at,
+      `SELECT l.id, l.phone, l.name, l.status, l.attention, l.created_at, l.updated_at,
               COUNT(m.id) AS appeals
        FROM leads l LEFT JOIN lead_messages m ON m.lead_id = l.id
        GROUP BY l.id ORDER BY l.updated_at DESC, l.id DESC`
@@ -288,11 +307,29 @@ app.get('/api/leads', requireAdmin, (req, res) => {
   res.json(leads.map((l) => ({ ...l, messages: byLead.get(l.id) || [] })));
 });
 
-/* Отметить заявку обработанной / новой */
+/* Сменить статус и/или сбросить флаг внимания */
 app.patch('/api/leads/:id', requireAdmin, (req, res) => {
-  const status = req.body?.status === 'done' ? 'done' : 'new';
-  db.prepare('UPDATE leads SET status = ? WHERE id = ?').run(status, req.params.id);
+  const b = req.body || {};
+  const sets = [];
+  const vals = [];
+  if (b.status !== undefined) {
+    if (!STATUSES.includes(b.status)) return res.status(400).json({ error: 'bad_status' });
+    sets.push('status = ?');
+    vals.push(b.status);
+  }
+  if (b.attention !== undefined) {
+    sets.push('attention = ?');
+    vals.push(b.attention ? 1 : 0);
+  }
+  if (!sets.length) return res.status(400).json({ error: 'nothing_to_update' });
+  vals.push(req.params.id);
+  db.prepare(`UPDATE leads SET ${sets.join(', ')} WHERE id = ?`).run(...vals);
   res.json({ ok: true });
+});
+
+/* Список статусов CRM (для колонок админки) */
+app.get('/api/statuses', requireAdmin, (req, res) => {
+  res.json(STATUS_META);
 });
 
 /* Удалить контакт (вся история удалится по каскаду) */
