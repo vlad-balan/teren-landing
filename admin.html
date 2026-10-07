@@ -178,7 +178,7 @@ function leadCard(l) {
       ${l.attention ? '<span class="att" title="Новое обращение по этой заявке">⚠</span>' : ''}
       <span class="name">${esc(l.name || 'Без имени')}</span>
     </div>
-    <a class="phone" href="tel:${esc(l.phone.replace(/\D/g, ''))}" onclick="event.stopPropagation()">${esc(l.phone)}</a>
+    <span class="phone">${esc(l.phone)}</span>
     <div class="meta">${l.appeals > 1 ? 'обращений: ' + l.appeals + ' · ' : ''}${esc(l.updated_at || l.created_at)}</div>
     ${last && (last.comment || last.subject) ? `<div class="snippet">${esc(last.comment || last.subject)}</div>` : ''}
   </div>`;
@@ -201,7 +201,7 @@ function renderModal(lead) {
   $('#modal').innerHTML = `
     <button class="close" onclick="closeModal()" title="Закрыть">×</button>
     <h2>${esc(lead.name || 'Без имени')}</h2>
-    <a class="m-phone" href="tel:${esc(lead.phone.replace(/\D/g, ''))}">${esc(lead.phone)}</a>
+    <span class="m-phone">${esc(lead.phone)}</span>
     <div class="m-badges">
       <span class="badge ${esc(lead.status)}">${esc(statusTitle(lead.status))}</span>
       ${lead.appeals > 1 ? `<span class="badge">обращений: ${lead.appeals}</span>` : ''}
