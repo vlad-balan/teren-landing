@@ -192,10 +192,11 @@ for (const p of DATA) {
   /* контент вместо шаблонного main + seo-голова */
   page = page.replace(/<main>[\s\S]*<\/main>/, main.trim());
   page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.title)} — чертежи и документация | Династия Дерева</title>`);
-  /* шаблонные description, keywords и canonical из projects.html не нужны — у проекта свои */
+  /* шаблонные description, keywords, canonical и JSON-LD из projects.html не нужны — у проекта свои */
   page = page.replace(/<meta name="description" content="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<meta name="keywords" content="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<link rel="canonical" href="[^"]*">(\r?\n)?/, '');
+  page = page.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/, '');
   page = page.replace('</head>', seoHead + '\n</head>');
   /* статику рендерит сборка — клиентские рендереры не нужны */
   page = page.replace('<script src="assets/js/projects-data.js"></script>', '');
