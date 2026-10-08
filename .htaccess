@@ -10,6 +10,10 @@ RewriteRule ^server/ - [F,L]
 RewriteRule ^\.git - [F,L]
 RewriteRule \.env$ - [F,L]
 
+# --- 301: www -> основной домен без www ---
+RewriteCond %{HTTP_HOST} ^www\.derevo-777\.ru$ [NC]
+RewriteRule ^(.*)$ https://derevo-777.ru/$1 [R=301,L]
+
 # --- 301: адреса с .html -> красивые (страница доступна по одному адресу) ---
 RewriteCond %{THE_REQUEST} \s/([^\s?]*)\.html[\s?]
 RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
