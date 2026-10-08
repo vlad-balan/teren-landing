@@ -362,6 +362,11 @@ app.post('/api/admin/login', (req, res) => {
 /* ---------- Админ-панель ---------- */
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 
+/* ---------- Страница 404 ---------- */
+app.use((_req, res) => {
+  res.status(404).sendFile(path.join(ROOT, '404.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Сервер запущен: http://localhost:${PORT}`);
   console.log(`Админ-панель:   http://localhost:${PORT}/admin`);

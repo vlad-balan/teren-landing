@@ -1,6 +1,9 @@
 # ===== Династия Дерева — правила для Beget (Apache) =====
 RewriteEngine On
 
+# --- Страница 404 ---
+ErrorDocument 404 /404.html
+
 # /projects — реальная папка; отключаем авто-редирект на слэш,
 # чтобы Apache не перебивал реврайт на projects.html
 DirectorySlash Off
