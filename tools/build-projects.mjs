@@ -120,7 +120,7 @@ for (const p of DATA) {
   <div class="container" style="text-align: center; max-width: 720px;">
     <h2 class="section__title">Хотите такой проект на своём участке?</h2>
     <p class="section__lead" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету и построим по этому проекту под ключ.</p>
-    <a class="btn btn--terra" href="../#cta">Получить расчет по проекту</a>
+    <a class="btn btn--yellow" href="../#cta">Получить расчет по проекту</a>
   </div>
 </section>
 
