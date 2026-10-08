@@ -609,8 +609,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 }
 .faq__item summary::-webkit-details-marker { display: none; }
 .faq__item summary:hover { color: var(--pine); }
-.faq__item summary .icon { width: 20px; height: 20px; color: var(--terra); flex: none; transition: transform var(--tr); }
-.faq__item[open] summary .icon { transform: rotate(180deg); }
+.faq__item summary::after {
+  content: "+";
+  flex: none; width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 195, 89, .16);
+  color: #ffc359; font-size: 22px; font-weight: 500; line-height: 1;
+  transition: transform var(--tr), background var(--tr), color var(--tr);
+}
+.faq__item summary:hover::after { background: rgba(255, 195, 89, .28); color: #e7a51f; }
+.faq__item[open] summary::after {
+  transform: rotate(45deg);
+  background: rgba(255, 195, 89, .28);
+  color: #e7a51f;
+}
 .faq__item p { padding: 0 22px 20px; font-size: 15px; color: var(--muted); max-width: 760px; }
 
 /* ---------- CTA ---------- */
