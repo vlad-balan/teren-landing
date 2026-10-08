@@ -253,7 +253,11 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .lead-form__sub { margin: 10px 0 20px; font-size: 14.5px; color: var(--muted); }
 .field { margin-bottom: 16px; }
 .field label { display: block; margin-bottom: 7px; font-size: 13.5px; font-weight: 700; color: var(--heading); }
-.field label span { color: var(--terra); }
+.field label span { color: var(--terra); } /* красная звёздочка обязательных полей */
+/* текст поля прикрепления файла красным не красим */
+.field .file-label span { color: inherit; }
+.field .file-label__text { color: var(--ink); }
+.field .file-label__hint { color: var(--muted); }
 .field input, .field select, .field textarea {
   width: 100%; padding: 14px 16px;
   border: 1.6px solid var(--line); border-radius: var(--radius-sm);
