@@ -191,7 +191,7 @@ for (const p of DATA) {
   let page = tpl;
   /* контент вместо шаблонного main + seo-голова */
   page = page.replace(/<main>[\s\S]*<\/main>/, main.trim());
-  page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.title)} — чертежи и документация | Династия Дерева</title>`);
+  page = page.replace('<title>Каталог проектов — беседки, дома и бани | Династия Дерева</title>', `<title>${esc(p.shortTitle)} — чертежи и документация</title>`);
   /* шаблонные description, keywords, canonical и JSON-LD из projects.html не нужны — у проекта свои */
   page = page.replace(/<meta name="description" content="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<meta name="keywords" content="[^"]*">(\r?\n)?/, '');
