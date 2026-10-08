@@ -227,6 +227,8 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${BASE}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>
   <url><loc>${BASE}/projects</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
+  <url><loc>${BASE}/privacy</loc><lastmod>${today}</lastmod><priority>0.3</priority></url>
+  <url><loc>${BASE}/terms</loc><lastmod>${today}</lastmod><priority>0.3</priority></url>
 ${urls.slice(2).map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`).join('\n')}
 </urlset>
 `;
