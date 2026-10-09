@@ -973,3 +973,6 @@ body.is-locked .header { position: fixed; left: 0; right: 0; }
 
 /* ---------- Прямые углы карточек (главная и каталог) ---------- */
 .proj-card, .srv-card, .adv-card, .fear-card, .stage, .review, .stat { border-radius: 0; }
+
+/* описание проекта на всю ширину под hero-блоком */
+.pd-hero + .pd-desc { margin: 4px 0 24px; }

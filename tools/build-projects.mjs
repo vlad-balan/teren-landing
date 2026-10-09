@@ -82,9 +82,9 @@ for (const p of DATA) {
         <h1>${esc(p.title)}</h1>
         <div class="pd-facts">${p.facts.map((f) => `<div class="pd-fact"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}</div>
         ${p.price ? `<div class="pd-price-line">Строительство под ключ — <b>${esc(p.price)}</b></div>` : ''}
-        <p class="pd-desc">${esc(p.description)}</p>
       </div>
     </div>
+    <p class="pd-desc">${esc(p.description)}</p>
     <ul class="pd-features">${p.features.map((f) => `<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>${esc(f)}</li>`).join('')}</ul>
   </div>
 </section>
