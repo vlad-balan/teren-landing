@@ -97,9 +97,9 @@ for (const p of DATA) {
     </header>
     <div class="pgal">
       ${p.gallery.map((g) => `
-      <a class="pgal__item" href="${sheetUrl(p, g.sheet)}" target="_blank" rel="noopener">
+      <a class="pgal__item" href="/${g.src}">
         <img src="/${g.src}" alt="${esc(p.shortTitle)} — ${esc(g.caption)}" loading="lazy">
-        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>${esc(g.caption)} · ${sheetLabel(p).toLowerCase()} ${g.sheet}</span>
+        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>${esc(g.caption)}</span>
       </a>`).join('')}
     </div>
   </div>
@@ -119,7 +119,32 @@ for (const p of DATA) {
   </div>
 </section>
 
-</main>`;
+</main>
+
+<style>
+.pgal__item { cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 120; background: rgba(24, 20, 14, .88); display: grid; place-items: center; cursor: zoom-out; padding: 24px; }
+.lightbox img { max-width: min(1100px, 94vw); max-height: 88vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+</style>
+<script>
+document.addEventListener('click', function (e) {
+  const a = e.target.closest('a.pgal__item');
+  if (!a) return;
+  e.preventDefault();
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  const img = document.createElement('img');
+  img.src = a.getAttribute('href');
+  img.alt = '';
+  lb.appendChild(img);
+  lb.addEventListener('click', function () { lb.remove(); });
+  document.addEventListener('keydown', function onKey(ev) {
+    if (ev.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', onKey); }
+  });
+  document.body.appendChild(lb);
+});
+</script>
+`;
 
   const desc = p.description.slice(0, 155).trim() + '…';
   const canonical = `${BASE}/projects/${p.id}`;

@@ -155,21 +155,21 @@
     </header>
     <div class="pgal">
       
-      <a class="pgal__item" href="../%D0%9F%D0%BB%D0%B0%D0%BD%D1%8B/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025.pdf#page=27" target="_blank" rel="noopener">
+      <a class="pgal__item" href="../assets/img/projects/banya-04-m/viz-1.webp">
         <img src="../assets/img/projects/banya-04-m/viz-1.webp" alt="Баня 9×5,7 — Визуализация" loading="lazy">
-        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация · стр. 27</span>
+        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация</span>
       </a>
-      <a class="pgal__item" href="../%D0%9F%D0%BB%D0%B0%D0%BD%D1%8B/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025.pdf#page=29" target="_blank" rel="noopener">
+      <a class="pgal__item" href="../assets/img/projects/banya-04-m/viz-2.webp">
         <img src="../assets/img/projects/banya-04-m/viz-2.webp" alt="Баня 9×5,7 — Визуализация" loading="lazy">
-        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация · стр. 29</span>
+        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация</span>
       </a>
-      <a class="pgal__item" href="../%D0%9F%D0%BB%D0%B0%D0%BD%D1%8B/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025.pdf#page=26" target="_blank" rel="noopener">
+      <a class="pgal__item" href="../assets/img/projects/banya-04-m/viz-3.webp">
         <img src="../assets/img/projects/banya-04-m/viz-3.webp" alt="Баня 9×5,7 — Визуализация" loading="lazy">
-        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация · стр. 26</span>
+        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация</span>
       </a>
-      <a class="pgal__item" href="../%D0%9F%D0%BB%D0%B0%D0%BD%D1%8B/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2004_%D0%9C_2025.pdf#page=30" target="_blank" rel="noopener">
+      <a class="pgal__item" href="../assets/img/projects/banya-04-m/viz-4.webp">
         <img src="../assets/img/projects/banya-04-m/viz-4.webp" alt="Баня 9×5,7 — Визуализация" loading="lazy">
-        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация · стр. 30</span>
+        <span class="pgal__cap"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Визуализация</span>
       </a>
     </div>
   </div>
@@ -185,6 +185,30 @@
 </section>
 
 </main>
+
+<style>
+.pgal__item { cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 120; background: rgba(24, 20, 14, .88); display: grid; place-items: center; cursor: zoom-out; padding: 24px; }
+.lightbox img { max-width: min(1100px, 94vw); max-height: 88vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+</style>
+<script>
+document.addEventListener('click', function (e) {
+  const a = e.target.closest('a.pgal__item');
+  if (!a) return;
+  e.preventDefault();
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  const img = document.createElement('img');
+  img.src = a.getAttribute('href');
+  img.alt = '';
+  lb.appendChild(img);
+  lb.addEventListener('click', function () { lb.remove(); });
+  document.addEventListener('keydown', function onKey(ev) {
+    if (ev.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', onKey); }
+  });
+  document.body.appendChild(lb);
+});
+</script>
 
 <!-- ===================== ФУТЕР ===================== -->
 <footer class="footer">
