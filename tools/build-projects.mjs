@@ -105,18 +105,6 @@ for (const p of DATA) {
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="pd-full">
-      <div>
-        <b>Полный комплект документации</b>
-        <span>один PDF со всеми ${p.facts[6] ? p.facts[6].value : ''} листами</span>
-      </div>
-      <a class="btn btn--yellow" href="${fullUrl(p)}" target="_blank" rel="noopener">Скачать PDF · ${esc(p.pdfFullSize)}</a>
-    </div>
-  </div>
-</section>
-
 <section class="section section--sand">
   <div class="container" style="text-align: center; max-width: 720px;">
     <h2 class="section__title">Хотите такой проект на своём участке?</h2>
@@ -127,7 +115,7 @@ for (const p of DATA) {
       <b>${esc(p.price)}</b>
     </div>
     <p class="pd-price-note">В расчёте учтены: ${esc(p.priceIncludes)}.</p>` : ''}
-    <a class="btn btn--yellow" href="../#cta">Получить расчет по проекту</a>
+    <a class="btn btn--yellow" href="../#cta" style="margin-top: 26px;">Получить расчет по проекту</a>
   </div>
 </section>
 
