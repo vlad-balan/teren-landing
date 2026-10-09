@@ -7,8 +7,8 @@
 window.TEREM_PROJECTS = [
   {
     id: 'besedka-14x12',
-    title: 'Беседка-павильон 14×12 м с тёплой зоной',
-    shortTitle: 'Беседка-павильон 14×12',
+    title: 'Беседка «Версаль» 14×12',
+    shortTitle: 'Беседка «Версаль» 14×12',
     type: 'Беседка',
     tags: ['Беседка', 'Деревянный каркас', 'Тёплая зона', 'Терраса'],
     facts: [
@@ -113,8 +113,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'dom-keramoblok',
-    title: 'Дом из керамоблока 13,8×9,8 м',
-    shortTitle: 'Дом 13,8×9,8 из керамоблока',
+    title: 'Дом «Терра» 13,8×9,8',
+    shortTitle: 'Дом «Терра» 13,8×9,8',
     type: 'Дом',
     pdfMode: 'single',
     tags: ['Дом', 'Керамоблок', 'Фальцевая кровля', 'Терраса'],
@@ -197,8 +197,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-novoe-selco',
-    title: 'Баня 10,5×12 м с мансардой',
-    shortTitle: 'Баня 10,5×12 с мансардой',
+    title: 'Баня «Усадьба» 10,5×12',
+    shortTitle: 'Баня «Усадьба» 10,5×12',
     type: 'Баня',
     pdfMode: 'single',
     tags: ['Баня', 'Деревянный каркас', 'Мансарда', 'Металлочерепица'],
@@ -306,8 +306,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-novoe-selco-2',
-    title: 'Баня 10×9,8 м одноэтажная',
-    shortTitle: 'Баня 10×9,8 одноэтажная',
+    title: 'Баня «Ранчо» 10×9,8',
+    shortTitle: 'Баня «Ранчо» 10×9,8',
     type: 'Баня',
     pdfMode: 'single',
     tags: ['Баня', 'Деревянный каркас', 'Металлочерепица'],
@@ -415,8 +415,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'besedka-miloradovo',
-    title: 'Беседка-галерея 6×17,5 м',
-    shortTitle: 'Беседка-галерея 6×17,5',
+    title: 'Беседка «Дебаркадер» 6×17,5',
+    shortTitle: 'Беседка «Дебаркадер» 6×17,5',
     type: 'Беседка',
     tags: ['Беседка', 'Деревянный каркас', 'Кликфальц', 'Двускатная'],
     facts: [
@@ -520,8 +520,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'besedka-chiverevo',
-    title: 'Беседка 8×5 м с тёплым полом',
-    shortTitle: 'Беседка 8×5 с тёплым полом',
+    title: 'Беседка «Лофт» 8×5',
+    shortTitle: 'Беседка «Лофт» 8×5',
     type: 'Беседка',
     pdfMode: 'single',
     tags: ['Беседка', 'Деревянный каркас', 'Тёплый пол', 'Плоская кровля'],
@@ -621,8 +621,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'vait-village',
-    title: 'Баня 7,7×6 м одноэтажная',
-    shortTitle: 'Баня 7,7×6',
+    title: 'Баня «Гнездо» 7,7×6',
+    shortTitle: 'Баня «Гнездо» 7,7×6',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -715,8 +715,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'yuzhnoe-sudakovo',
-    title: 'Дом 10×7 м одноэтажный',
-    shortTitle: 'Дом 10×7',
+    title: 'Дом «Прованс» 10×7',
+    shortTitle: 'Дом «Прованс» 10×7',
     type: 'Дом',
     tags: ["Дом", "Деревянный каркас", "Терраса"],
     price: '5 120 500 ₽',
@@ -812,8 +812,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'fedorovskoe',
-    title: 'Баня 10,4×6 м одноэтажная',
-    shortTitle: 'Баня 10,4×6',
+    title: 'Баня «Форест» 10,4×6',
+    shortTitle: 'Баня «Форест» 10,4×6',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -906,8 +906,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'mosvodokanal',
-    title: 'Баня 11,5×8,5 м одноэтажная',
-    shortTitle: 'Баня 11,5×8,5',
+    title: 'Баня «Гринвич» 11,5×8,5',
+    shortTitle: 'Баня «Гринвич» 11,5×8,5',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -945,8 +945,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'duhanino',
-    title: 'Баня 12×14,6 м из клееного бруса',
-    shortTitle: 'Баня 12×14,6 брус',
+    title: 'Баня «Традиция» 12×14,6',
+    shortTitle: 'Баня «Традиция» 12×14,6',
     type: 'Баня',
     tags: ["Баня", "Клееный брус"],
     facts: [
@@ -984,8 +984,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-01-no',
-    title: 'Баня 7,7×15 м одноэтажная',
-    shortTitle: 'Баня 7,7×15',
+    title: 'Баня «Полночь» 7,7×15',
+    shortTitle: 'Баня «Полночь» 7,7×15',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -1076,8 +1076,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-02-rl',
-    title: 'Баня-беседка 16,3×4 м',
-    shortTitle: 'Баня-беседка 16,3×4',
+    title: 'Баня-беседка «Купель» 16,3×4',
+    shortTitle: 'Баня-беседка «Купель» 16,3×4',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -1166,8 +1166,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-03-mp',
-    title: 'Баня 14×8,1 м одноэтажная',
-    shortTitle: 'Баня 14×8,1',
+    title: 'Баня «Атлант» 14×8,1',
+    shortTitle: 'Баня «Атлант» 14×8,1',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -1256,8 +1256,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-04-m',
-    title: 'Баня 9×5,7 м одноэтажная',
-    shortTitle: 'Баня 9×5,7',
+    title: 'Баня «Фьорд» 9×5,7',
+    shortTitle: 'Баня «Фьорд» 9×5,7',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
@@ -1343,8 +1343,8 @@ window.TEREM_PROJECTS = [
 
   {
     id: 'banya-05-vv',
-    title: 'Баня 12×9 м одноэтажная',
-    shortTitle: 'Баня 12×9',
+    title: 'Баня «Бриз» 12×9',
+    shortTitle: 'Баня «Бриз» 12×9',
     type: 'Баня',
     tags: ["Баня", "Деревянный каркас", "Терраса"],
     facts: [
