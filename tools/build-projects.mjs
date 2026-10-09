@@ -80,7 +80,7 @@ for (const p of DATA) {
       <div class="pd-info">
         <div class="pd-tags">${p.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
         <h1>${esc(p.title)}</h1>
-        <div class="pd-facts">${p.facts.map((f) => `<div class="pd-fact"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}</div>
+        <div class="pd-facts">${p.facts.map((f) => `<div class="pd-fact"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}${p.price ? `<div class="pd-fact"><span>Строительство под ключ</span><b>${esc(p.price)}</b></div>` : ''}</div>
         <p class="pd-desc">${esc(p.description)}</p>
       </div>
     </div>
