@@ -120,6 +120,12 @@ for (const p of DATA) {
   <div class="container" style="text-align: center; max-width: 720px;">
     <h2 class="section__title">Хотите такой проект на своём участке?</h2>
     <p class="section__lead" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету и построим по этому проекту под ключ.</p>
+    ${p.price ? `
+    <div class="pd-price">
+      <span>Строительство по этому проекту</span>
+      <b>${esc(p.price)}</b>
+    </div>
+    <p class="pd-price-note">В расчёте учтены: ${esc(p.priceIncludes)}.</p>` : ''}
     <a class="btn btn--yellow" href="../#cta">Получить расчет по проекту</a>
   </div>
 </section>
@@ -172,7 +178,14 @@ for (const p of DATA) {
     "name": ${JSON.stringify(p.title)},
     "description": ${JSON.stringify(p.description)},
     "image": "${BASE}/${p.cover}",
-    "category": ${JSON.stringify(p.type)},
+    "category": ${JSON.stringify(p.type)},${p.price ? `
+    "offers": {
+      "@type": "Offer",
+      "price": "${p.price.replace(/\D/g, '')}",
+      "priceCurrency": "RUB",
+      "availability": "https://schema.org/InStock",
+      "url": "${canonical}"
+    },` : ''}
     "brand": { "@type": "Organization", "name": "Династия Дерева" }
   }
   </script>

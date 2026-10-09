@@ -32,7 +32,7 @@
         '<h3>' + p.shortTitle + '</h3>' +
         '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
         '<div class="proj-card__foot">' +
-        '<p class="proj-card__price">Рабочая документация<b>' + p.facts[6].value + ' листов</b></p>' +
+        '<p class="proj-card__price">' + (p.price ? 'Строительство под ключ<b>' + p.price + '</b>' : 'Рабочая документация<b>' + p.facts[6].value + ' листов</b>') + '</p>' +
         '<a class="link-btn" href="projects/' + p.id + '">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
         '</div></div></article>'
       );
