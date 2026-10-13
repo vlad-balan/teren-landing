@@ -115,7 +115,8 @@
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="preload" as="image" imagesrcset="assets/img/hero-bg-mobile.webp?v=1 800w, assets/img/hero-bg.webp?v=5 1127w" imagesizes="100vw">
   <link rel="stylesheet" href="assets/css/style.css?v=27">
 </head>
 <body>
@@ -376,7 +377,10 @@
       </form>
     </div>
   </div>
-  <img class="hero__bg" src="assets/img/hero-bg.webp?v=4" alt="" aria-hidden="true" decoding="async">
+  <picture>
+          <source media="(max-width: 980px)" srcset="assets/img/hero-bg-mobile.webp?v=1">
+          <img class="hero__bg" src="assets/img/hero-bg.webp?v=5" alt="" aria-hidden="true" decoding="async">
+        </picture>
 </section>
 
 <!-- ===================== ПРОЕКТЫ ===================== -->
