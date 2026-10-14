@@ -18,6 +18,15 @@ RewriteRule \.env$ - [F,L]
 RewriteCond %{HTTP_HOST} ^www\.derevo-777\.ru$ [NC]
 RewriteRule ^(.*)$ https://derevo-777.ru/$1 [R=301,L]
 
+# --- 301: дубли главной — «/?» и повторные слэши «////» ---
+RewriteCond %{THE_REQUEST} \s/\?\s [OR]
+RewriteCond %{THE_REQUEST} \s/{2,}\s
+RewriteRule .* https://derevo-777.ru [R=301,L]
+
+# --- 301: /index.html -> главная ---
+RewriteCond %{THE_REQUEST} \s/index\.html?\s [NC]
+RewriteRule ^index\.html?$ https://derevo-777.ru [R=301,L]
+
 # --- 301: адреса с .html -> красивые, всегда по https (страница доступна по одному адресу) ---
 RewriteCond %{THE_REQUEST} \s/([^\s?]*)\.html[\s?]
 RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
