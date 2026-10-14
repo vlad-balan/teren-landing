@@ -18,11 +18,12 @@ RewriteRule \.env$ - [F,L]
 RewriteCond %{HTTP_HOST} ^www\.derevo-777\.ru$ [NC]
 RewriteRule ^(.*)$ https://derevo-777.ru/$1 [R=301,L]
 
-# --- 301: дубли главной — «/?» и повторные слэши «////».
+# --- 301: дубли главной — «/?», «/?/», «/?123» и повторные слэши «////».
 #     Цель заканчивается на «?» — это сбрасывает сохранённый запрос
 #     (иначе редирект ведёт сам на себя и браузер зацикливается) ---
-RewriteCond %{THE_REQUEST} \s/\?\s [OR]
-RewriteCond %{THE_REQUEST} \s/{2,}\s
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\?[/\d]*\ HTTP/ [OR]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /{2,}\ HTTP/ [OR]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /{2,}[/\d]*\ HTTP/
 RewriteRule .* https://derevo-777.ru/? [R=301,L]
 
 # --- 301: /index.html -> главная ---
