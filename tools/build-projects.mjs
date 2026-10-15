@@ -258,6 +258,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>${BASE}/projects</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>
   <url><loc>${BASE}/privacy</loc><lastmod>${today}</lastmod><priority>0.3</priority></url>
   <url><loc>${BASE}/terms</loc><lastmod>${today}</lastmod><priority>0.3</priority></url>
+  <url><loc>${BASE}/contacts</loc><lastmod>${today}</lastmod><priority>0.4</priority></url>
 ${urls.slice(2).map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`).join('\n')}
 </urlset>
 `;
