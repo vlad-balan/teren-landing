@@ -185,7 +185,7 @@ app.use((req, res, next) => {
 });
 
 /* Заголовки безопасности (как в .htaccess на Beget) */
-const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mc.yandex.ru https://yastatic.net https://*.yandex.ru https://avatars.mds.yandex.net; font-src 'self' data:; connect-src 'self' https://mc.yandex.ru https://yandex.ru; frame-src 'self' https://yandex.ru https://*.yandex.ru https://yastatic.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests";
+const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yandex.ru https://yastatic.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mc.yandex.ru https://yastatic.net https://*.yandex.ru https://avatars.mds.yandex.net; font-src 'self' data:; connect-src 'self' https://mc.yandex.ru https://yandex.ru https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com; frame-src 'self' https://yandex.ru https://*.yandex.ru https://yastatic.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests";
 app.use((_req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
