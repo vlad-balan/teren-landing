@@ -1,6 +1,12 @@
 # ===== Династия Дерева — правила для Beget (Apache) =====
 RewriteEngine On
 
+# Отключаем content negotiation хостинга (MultiViews): из-за него запросы вида
+# /contacts/1 маппятся в contacts.html с PATH_INFO и падают 500, а /contacts/
+# отдаётся в обход наших редиректов. Negotiation срабатывает на этапе раньше,
+# чем правила mod_rewrite ниже, поэтому лечится только здесь.
+Options -MultiViews
+
 # --- Страница 404 ---
 ErrorDocument 404 /404.html
 
