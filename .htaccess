@@ -34,6 +34,25 @@ RewriteRule ^index\.html?$ https://derevo-777.ru [R=301,L]
 RewriteCond %{THE_REQUEST} \s/index/?[\s?] [NC]
 RewriteRule ^index/?$ https://derevo-777.ru [R=301,L]
 
+# --- 301: слэш на конце URL -> адрес без слэша.
+#     DirectorySlash Off отключил авто-редирект Apache, поэтому /projects/
+#     и /contacts/ иначе падают во внутренние реврайты и ErrorDocument ---
+RewriteRule ^(.+)/$ https://derevo-777.ru/$1 [R=301,L]
+
+# --- Несуществующий путь глубже существующей страницы (/contacts/1) -> сразу 404.
+#     Первый сегмент совпадает с именем страницы (contacts.html), и хостинг
+#     вместо чистой 404 уходит в content negotiation и внутренние редиректы (500).
+#     Реальные файлы и страницы проектов (/projects/<id>) не задеваем ---
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html !-f
+RewriteCond %{REQUEST_URI} ^/([a-z0-9\-]+)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
+RewriteRule ^ - [R=404,L]
+
+# --- favicon.ico нет в корне (только svg) — отдаём svg, чтобы не плодить 404 в консоли ---
+RewriteRule ^favicon\.ico$ assets/img/favicon.svg [L]
+
 # --- 301: адреса с .html -> красивые, всегда по https (страница доступна по одному адресу) ---
 RewriteCond %{THE_REQUEST} \s/([^\s?]*)\.html[\s?]
 RewriteCond %{DOCUMENT_ROOT}/%1\.html -f

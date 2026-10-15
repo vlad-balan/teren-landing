@@ -166,6 +166,21 @@ app.use((req, res, next) => {
   if (/^\/index(\.html?)?\/?$/.test(req.path)) {
     return res.redirect(301, '/');
   }
+  /* Слэш на конце -> без слэша: у страниц (contacts/ -> contacts) и у
+     несуществующих адресов (conta/ -> conta). Реальные папки (assets/,
+     images/) не трогаем — их отдаёт express.static */
+  if (req.path.length > 1 && req.path.endsWith('/') && !path.extname(req.path)) {
+    const stripped = req.path.replace(/\/+$/, '');
+    let decoded = null;
+    try { decoded = decodeURIComponent(stripped); } catch { /* кривой URL уйдёт в 404 как есть */ }
+    if (decoded !== null) {
+      const htmlPath = path.join(ROOT, decoded + '.html');
+      const selfPath = path.join(ROOT, decoded);
+      const pageExists = htmlPath.startsWith(ROOT) && fs.existsSync(htmlPath);
+      const selfExists = selfPath.startsWith(ROOT) && fs.existsSync(selfPath);
+      if (pageExists || !selfExists) return res.redirect(301, stripped);
+    }
+  }
   next();
 });
 
