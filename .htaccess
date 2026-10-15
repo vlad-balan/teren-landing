@@ -56,6 +56,16 @@ RewriteCond %{REQUEST_URI} ^/([a-z0-9\-]+)/ [NC]
 RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
 RewriteRule ^ - [R=404,L]
 
+# --- Страховка на случай работающего MultiViews: negotiation маппит /contacts/1
+#     в contacts.html с PATH_INFO=/1 ещё до rewrite-правил, и обработчик падает 500.
+#     PATH_INFO к этому моменту уже заполнен: если есть хвост, а первый сегмент —
+#     существующая страница, отдаём 404 сразу. Точные страницы проектов
+#     (/projects/<id>) маппятся без хвоста и не задеваются ---
+RewriteCond %{PATH_INFO} ^/.+
+RewriteCond %{THE_REQUEST} \s/([a-z0-9\-]+)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
+RewriteRule ^ - [R=404,L]
+
 # --- favicon.ico нет в корне (только svg) — отдаём svg, чтобы не плодить 404 в консоли ---
 RewriteRule ^favicon\.ico$ assets/img/favicon.svg [L]
 
