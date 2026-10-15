@@ -30,6 +30,10 @@ RewriteRule .* https://derevo-777.ru/? [R=301,L]
 RewriteCond %{THE_REQUEST} \s/index\.html?\s [NC]
 RewriteRule ^index\.html?$ https://derevo-777.ru [R=301,L]
 
+# --- 301: /index и /index/ -> главная (иначе их отдаёт реврайт красивых адресов) ---
+RewriteCond %{THE_REQUEST} \s/index/?[\s?] [NC]
+RewriteRule ^index/?$ https://derevo-777.ru [R=301,L]
+
 # --- 301: адреса с .html -> красивые, всегда по https (страница доступна по одному адресу) ---
 RewriteCond %{THE_REQUEST} \s/([^\s?]*)\.html[\s?]
 RewriteCond %{DOCUMENT_ROOT}/%1\.html -f
@@ -41,7 +45,7 @@ RewriteRule ^(.*)\.html$ https://derevo-777.ru/$1 [R=301,L]
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Strict-Transport-Security "max-age=31536000"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://mc.yandex.ru https://yastatic.net https://*.yandex.ru https://avatars.mds.yandex.net; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://mc.yandex.ru https://yandex.ru; frame-src 'self' https://yandex.ru https://*.yandex.ru https://yastatic.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://mc.yandex.ru https://yastatic.net https://*.yandex.ru https://avatars.mds.yandex.net; font-src 'self' data:; connect-src 'self' https://mc.yandex.ru https://yandex.ru; frame-src 'self' https://yandex.ru https://*.yandex.ru https://yastatic.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # --- API заявок и админки (те же адреса, что в Node-версии) ---
