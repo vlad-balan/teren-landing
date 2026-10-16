@@ -408,7 +408,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .legal .upd { color: var(--muted); font-size: 14px; margin-top: 30px; }
 
 /* Текст на странице контактов — как обычный текст на главной (17px, 1.6), но в узкой колонке */
-.contacts-about { max-width: 820px; }
 .contacts-about p { margin: 0 0 16px; }
 .cat-group__title {
   font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 30px);
