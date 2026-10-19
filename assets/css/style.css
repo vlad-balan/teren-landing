@@ -909,6 +909,36 @@ body.is-locked .header { position: fixed; left: 0; right: 0; }
 .spec-table tbody b { color: var(--pine-700); }
 .spec-note { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 780px; }
 
+
+/* ---------- Галерея на страницах технологий ---------- */
+.fgal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.fgal__item { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+.fgal__item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+
+/* ---------- Страницы технологий (тёмная тема, scoped в main.tech-page) ---------- */
+main.tech-page {
+  --white: var(--card);        /* карточки поверх тёмного фона */
+  --pine-900: #E9EDEA;         /* заголовки/акценты — светлые */
+  --sand: var(--cream);
+  color: var(--ink);
+}
+main.tech-page .tech__facts { background: var(--card); }
+main.tech-page .pd-full { background: var(--pine); color: var(--white); }
+main.tech-page .pd-full .btn--terra { background: #E8A33D; color: #293735; }
+main.tech-page .projects__more { background: var(--card); border-color: var(--line); }
+main.tech-page .projects__more p { color: var(--ink); }
+main.tech-page .faq__item summary, main.tech-page .faq__item p { color: var(--ink); }
+main.tech-page .spec-table tbody td { color: var(--muted); }
+main.tech-page .spec-table tbody b, main.tech-page .pd-fact b { color: var(--ink); }
+main.tech-page .section__title, main.tech-page h1 { color: var(--ink); }
+main.tech-page .section__lead { color: var(--muted); }
+main.tech-page .breadcrumbs a { color: var(--pine); }
+main.tech-page .adv-card, main.tech-page .stage, main.tech-page .faq__item, main.tech-page .pdocs__group { background: var(--card); border-color: var(--line); }
+main.tech-page .adv-card h3, main.tech-page .stage h3 { color: var(--ink); }
+main.tech-page .pd-tags span { background: rgba(111, 160, 148, .18); color: var(--pine); }
+main.tech-page .tech__media--ph { background: var(--card); color: var(--muted); }
+main.tech-page .pd-hero .pd-info h2 { color: var(--ink); }
+
 /* ============================================================
    АДАПТИВ
    ============================================================ */
