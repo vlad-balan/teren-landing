@@ -339,6 +339,18 @@
     activate(tabs[0]);
   });
 
+
+  /* ---------- Фасад карты: живая Яндекс.Карта грузится по клику ---------- */
+  document.querySelectorAll('[data-map-facade]').forEach(function (facade) {
+    function showMap() {
+      facade.innerHTML =
+        '<iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%2017-%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4%20%D0%9C%D0%B0%D1%80%D1%8C%D0%B8%D0%BD%D0%BE%D0%B9%20%D0%A0%D0%BE%D1%89%D0%B8%2C%204%D0%BA1&z=16" ' +
+        'title="Офис Династия Дерева на карте Москвы" allowfullscreen></iframe>';
+      facade.classList.remove('contacts__map--facade');
+    }
+    facade.addEventListener('click', showMap);
+  });
+
   /* ---------- 9. Отправка заявок на бэкенд (server/server.js) ---------- */
   function sendLead(data) {
     var opts = { method: 'POST' };
