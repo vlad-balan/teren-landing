@@ -245,7 +245,7 @@ document.addEventListener('click', function (e) {
 }
 
 /* ---------- статические страницы (технологии и пр.) ---------- */
-const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html', 'brus.html', 'kombinirovannye-doma.html', 'karkas.html', 'fundament-plita.html', 'fundament-lenta.html'];
+const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html', 'brus.html', 'kombinirovannye-doma.html', 'karkas.html', 'fundament-plita.html', 'fundament-lenta.html', 'fundament-svai.html'];
 for (const sp of STATIC_PAGES) {
   if (fs.existsSync(path.join(ROOT, sp))) urls.push(BASE + '/' + sp.replace(/\.html$/, ''));
 }
