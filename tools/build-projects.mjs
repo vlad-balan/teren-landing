@@ -27,6 +27,7 @@ const BASE = (process.argv[2] || process.env.BASE_URL || 'https://derevo-777.ru'
    подсовываем глобальный window и читаем данные */
 globalThis.window = globalThis;
 await import(pathToFileURL(path.join(ROOT, 'assets/js/projects-data.js')).href);
+await import(pathToFileURL(path.join(ROOT, 'assets/js/projects-data-2.js')).href);
 const DATA = globalThis.TEREM_PROJECTS;
 
 if (!DATA || !DATA.length) {
