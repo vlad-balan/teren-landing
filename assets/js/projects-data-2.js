@@ -5,8 +5,8 @@
 window.TEREM_PROJECTS.push(
   {
     id: 'tarychevo',
-    title: 'АР Тарычево 19.09.2026',
-    shortTitle: 'АР Тарычево 19.09.2026',
+    title: 'Баня «Горизонт» 13,5×5,3',
+    shortTitle: 'Баня «Горизонт» 13,5×5,3',
     type: 'Баня',
     pdfMode: 'single',
     tags: ['Баня', 'Одноэтажная', 'Свайный фундамент', 'Металлочерепица'],
@@ -91,8 +91,8 @@ window.TEREM_PROJECTS.push(
 
   {
     id: 'stupino',
-    title: 'АР Новое Ступино',
-    shortTitle: 'АР Новое Ступино',
+    title: 'Баня «Панорама» 8,75×17,8',
+    shortTitle: 'Баня «Панорама» 8,75×17,8',
     type: 'Баня',
     pdfMode: 'single',
     tags: ['Баня', 'Двухэтажная', 'Монолитная плита', 'Круглогодичная'],
@@ -177,8 +177,8 @@ window.TEREM_PROJECTS.push(
 
   {
     id: 'mozhaisk',
-    title: 'АР Можайск',
-    shortTitle: 'АР Можайск',
+    title: 'Баня «Кедр» 8,0×7,2',
+    shortTitle: 'Баня «Кедр» 8,0×7,2',
     type: 'Баня',
     pdfMode: 'single',
     tags: ['Баня', 'Двухэтажная', 'Монолитная плита', 'Вальмовая кровля'],
