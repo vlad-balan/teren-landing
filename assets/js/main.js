@@ -351,6 +351,72 @@
     facade.addEventListener('click', showMap);
   });
 
+
+  /* ---------- Лайтбокс: просмотр фото проекта с листанием ---------- */
+  (function () {
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.innerHTML =
+      '<button class="lightbox__close" type="button" aria-label="Закрыть">×</button>' +
+      '<img src="" alt="">' +
+      '<div class="lightbox__cap"></div>' +
+      '<div class="lightbox__counter"></div>' +
+      '<button class="lightbox__btn lightbox__btn--prev" type="button" aria-label="Предыдущее">‹</button>' +
+      '<button class="lightbox__btn lightbox__btn--next" type="button" aria-label="Следующее">›</button>';
+    document.body.appendChild(overlay);
+
+    var items = [], current = 0;
+
+    function render() {
+      var it = items[current];
+      overlay.querySelector('img').src = it.src;
+      overlay.querySelector('img').alt = it.alt;
+      overlay.querySelector('.lightbox__cap').textContent = it.cap;
+      overlay.querySelector('.lightbox__counter').textContent = (current + 1) + ' / ' + items.length;
+    }
+    function open(itemsList, start) {
+      items = itemsList; current = start || 0;
+      render();
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    function step(d) {
+      if (!items.length) return;
+      current = (current + d + items.length) % items.length;
+      render();
+    }
+
+    overlay.querySelector('.lightbox__close').addEventListener('click', close);
+    overlay.querySelector('.lightbox__btn--prev').addEventListener('click', function () { step(-1); });
+    overlay.querySelector('.lightbox__btn--next').addEventListener('click', function () { step(1); });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+
+    /* Клик по фото в .pgal__item открывает лайтбокс со всеми фото этой галереи */
+    document.querySelectorAll('.pgal').forEach(function (gal) {
+      var links = [...gal.querySelectorAll('.pgal__item')];
+      var data = links.map(function (a) {
+        var img = a.querySelector('img');
+        return { src: a.getAttribute('href'), alt: img ? img.alt : '', cap: (a.querySelector('.pgal__cap') || {}).textContent || '' };
+      });
+      links.forEach(function (a, i) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          open(data, i);
+        });
+      });
+    });
+  })();
+
   /* ---------- 9. Отправка заявок на бэкенд (server/server.js) ---------- */
   function sendLead(data) {
     var opts = { method: 'POST' };

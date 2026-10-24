@@ -700,6 +700,33 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 20px); }
 .contacts__map--facade img { max-width: 86%; height: auto; border-radius: 10px; box-shadow: 0 6px 18px rgba(41, 55, 53, .18); }
 .contacts__map--facade .contacts__map-show { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 
+
+/* ---------- Лайтбокс галереи: листание стрелками ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 120;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(20, 26, 25, .94);
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+}
+.lightbox.is-open { opacity: 1; visibility: visible; }
+.lightbox img { max-width: min(92vw, 1100px); max-height: 82vh; object-fit: contain; border-radius: 10px; box-shadow: 0 30px 90px rgba(0, 0, 0, .5); }
+.lightbox__cap { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); color: #C9D4CD; font-size: 15px; }
+.lightbox__counter { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); color: #C9D4CD; font-size: 14px; letter-spacing: .06em; }
+.lightbox__btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 56px; height: 56px; border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .12); color: #fff;
+  font-size: 26px; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+  transition: background .2s;
+}
+.lightbox__btn:hover { background: rgba(255, 255, 255, .25); }
+.lightbox__btn--prev { left: 28px; }
+.lightbox__btn--next { right: 28px; }
+.lightbox__close { position: absolute; top: 22px; right: 26px; width: 46px; height: 46px; border: 0; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; font-size: 22px; cursor: pointer; }
+.lightbox__close:hover { background: rgba(255,255,255,.25); }
+.pgal__item { cursor: zoom-in; }
+
 /* ---------- Плавающие кнопки ---------- */
 .float-social { position: fixed; right: 22px; bottom: 22px; z-index: 80; display: grid; gap: 10px; }
 .float-social__btn { position: relative; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; color: var(--white); box-shadow: 0 10px 26px rgba(41, 55, 53, .35); transition: transform var(--tr); }
