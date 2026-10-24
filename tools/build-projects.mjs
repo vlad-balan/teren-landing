@@ -189,7 +189,7 @@ document.addEventListener('click', function (e) {
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": ${p.price ? '"Product"' : '"CreativeWork"'},
     "name": ${JSON.stringify(p.title)},
     "description": ${JSON.stringify(p.description)},
     "image": "${BASE}/${p.cover}",
