@@ -116,7 +116,7 @@ for (const p of DATA) {
       <b>${esc(p.price)}</b>
     </div>
     <p class="pd-price-note">В расчёте учтены: ${esc(p.priceIncludes)}.</p>` : ''}
-    <a class="btn btn--yellow" href="../#cta" style="margin-top: 26px;">Получить расчет по проекту</a>
+    <button class="btn btn--yellow" type="button" style="margin-top: 26px;" data-modal="modal-callback" data-subject="${esc(p.title)}">Получить расчет по проекту</button>
   </div>
 </section>
 

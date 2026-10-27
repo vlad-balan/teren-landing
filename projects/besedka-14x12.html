@@ -15,7 +15,7 @@
   <title>Беседка «Версаль» 14×12 — чертежи и документация</title>
         <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
   <link rel="stylesheet" href="../assets/fonts/fonts.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=33">
+  <link rel="stylesheet" href="../assets/css/style.css?v=34">
 
   <link rel="canonical" href="https://derevo-777.ru/projects/besedka-14x12">
   <meta name="description" content="Беседка-павильон для круглогодичного отдыха: утеплённая зона 22,7 м² с тёплым полом и панорамным остеклением плюс открытая терраса. Деревянный каркас 145×4…">
@@ -108,7 +108,7 @@
     </a>
     <div class="header__actions">
       <a class="header__phone" href="tel:+79991739106"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span>+7 (999) 173-91-06</span></a>
-      <a class="btn btn--yellow" href="../#cta">Обратная связь</a>
+      <button class="btn btn--yellow" type="button" data-modal="modal-callback">Обратная связь</button>
       <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -222,7 +222,7 @@
       <b>3 960 000 ₽</b>
     </div>
     <p class="pd-price-note">В расчёте учтены: фундамент — винтовые сваи (д 108 мм); обвязка, лаги, каркас и конструктив кровли из сухой строганой доски камерной сушки (с утеплением, гидроветрозащитой снаружи и пароизоляцией внутри); столбы на террасе — конструкционный клееный брус; кровельное покрытие — наплавляемая кровля Техноэласт ЭКП/ЭПП; водосточная система — металлическая; доставки до 60 км от МКАД включены.</p>
-    <a class="btn btn--yellow" href="../#cta" style="margin-top: 26px;">Получить расчет по проекту</a>
+    <button class="btn btn--yellow" type="button" style="margin-top: 26px;" data-modal="modal-callback" data-subject="Беседка «Версаль» 14×12">Получить расчет по проекту</button>
   </div>
 </section>
 
@@ -251,6 +251,63 @@ document.addEventListener('click', function (e) {
   document.body.appendChild(lb);
 });
 </script>
+
+<!-- ===================== МОДАЛКИ ===================== -->
+<div class="modal" id="modal-callback" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="callback-title">
+  <div class="modal__overlay" data-close></div>
+  <div class="modal__box">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть окно">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <form class="lead-form" data-form="callback" novalidate>
+      <p class="lead-form__title" id="callback-title">Перезвоним за 42 минуты</p>
+      <p class="lead-form__sub" id="callback-subject-note">Оставьте телефон — уточним детали по вашему объекту и назовем ориентир по цене.</p>
+      <input type="hidden" name="subject" id="callback-subject" value="">
+      <div class="field">
+        <label for="cb-name">Ваше имя</label>
+        <input type="text" id="cb-name" name="name" placeholder="Как к вам обращаться" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="cb-phone">Телефон <span aria-hidden="true">*</span></label>
+        <input type="tel" id="cb-phone" name="phone" placeholder="+7 (___) ___-__-__" required autocomplete="tel">
+      </div>
+      <button class="btn btn--yellow btn--block" type="submit">Жду звонка</button>
+      <label class="consent">
+        <input type="checkbox" checked required>
+        <span>Согласен с <a href="#" data-modal="modal-privacy">политикой конфиденциальности</a></span>
+      </label>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="modal-thanks" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
+  <div class="modal__overlay" data-close></div>
+  <div class="modal__box modal__box--thanks">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть окно">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="modal__check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></div>
+    <p class="modal__title" id="thanks-title">Заявка отправлена!</p>
+    <p class="modal__text">Менеджер свяжется с вами в течение 42 минут в рабочее время (9:00–21:00). Если удобнее в мессенджере — напишите нам, кнопки внизу справа.</p>
+    <button class="btn btn--pine btn--block" type="button" data-close>Понятно</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-privacy" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="modal__overlay" data-close></div>
+  <div class="modal__box modal__box--privacy">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть окно">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <p class="modal__title" id="privacy-title">Политика конфиденциальности</p>
+    <div class="modal__text modal__text--left">
+      <p>Оператор персональных данных — Династия Дерева (заменить на полные реквизиты). Отправляя форму, вы даете согласие на обработку персональных данных (имя, телефон) в целях обратной связи и подготовки расчета в соответствии с ФЗ-152 «О персональных данных».</p>
+      <p>Данные не передаются третьим лицам, не публикуются и хранятся не дольше, чем это необходимо для обработки обращения. Вы можете отозвать согласие, направив запрос на почту, указанную в разделе «Контакты».</p>
+      <p><small>Это сокращенный шаблон — перед публикацией замените на текст, согласованный с юристом.</small></p>
+    </div>
+    <button class="btn btn--pine btn--block" type="button" data-close>Закрыть</button>
+  </div>
+</div>
 
 <!-- ===================== ФУТЕР ===================== -->
 <footer class="footer">
@@ -292,7 +349,7 @@ document.addEventListener('click', function (e) {
   </div>
 </footer>
 
-<script src="../assets/js/main.js?v=6"></script>
+<script src="../assets/js/main.js?v=9"></script>
 
 <script src="../assets/js/projects-data-2.js"></script>
 
