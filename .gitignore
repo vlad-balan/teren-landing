@@ -15,3 +15,6 @@ node_modules/
 server/.env
 server/data/
 server/node_modules/
+
+# Ярлыки Windows
+*.lnk
