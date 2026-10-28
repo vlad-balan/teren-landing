@@ -16,7 +16,7 @@
   if (catalogRoot) {
     var order = ['Дом', 'Баня', 'Беседка', 'Гараж', 'Навес', 'Барбекю комплекс'];
     var labels = { 'Дом': 'Дома', 'Баня': 'Бани', 'Беседка': 'Беседки', 'Гараж': 'Гаражи', 'Навес': 'Навесы', 'Барбекю комплекс': 'Барбекю комплексы' };
-    var groupIds = { 'Барбекю комплекс': 'cat-bbq' };
+    var groupIds = { 'Дом': 'cat-dom', 'Баня': 'cat-banya', 'Беседка': 'cat-besedka', 'Гараж': 'cat-garazh', 'Навес': 'cat-naves', 'Барбекю комплекс': 'cat-bbq' };
     /* типы, которых нет в списке, не теряем — выводим в конце как есть */
     DATA.forEach(function (p) {
       if (order.indexOf(p.type) < 0) order.push(p.type);
@@ -48,6 +48,15 @@
         '<div class="projects__grid">' + items.map(card).join('') + '</div>' +
         '</section>';
     }).join('');
+
+    /* Якорь категории (#cat-dom, #cat-bbq …): браузер прыгает к фрагменту до
+       того, как каталог отрисован скриптом, — прокручиваем сами */
+    if (location.hash) {
+      var anchorTarget = document.getElementById(location.hash.slice(1));
+      if (anchorTarget && anchorTarget.classList.contains('cat-group')) {
+        setTimeout(function () { anchorTarget.scrollIntoView({ block: 'start', behavior: 'instant' }); }, 50);
+      }
+    }
   }
 
   /* ---------- Страница проекта ---------- */
