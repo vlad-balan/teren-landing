@@ -547,5 +547,203 @@ window.TEREM_PROJECTS.push(
     pdfMode: 'single',
     pdfFull: 'Планы/_Баня_/_Баня_.pdf',
     pdfFullSize: '8 МБ'
+  },
+
+  {
+    id: 'barbekyu-kompleks-aleksandrovo-2',
+    title: 'Барбекю-комплекс «Траттория»',
+    shortTitle: 'Барбекю-комплекс «Траттория»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Летняя кухня', 'Мойка', 'Дровник'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в павильоне летней кухни' }
+    ],
+    features: [
+      'Две топки с чугунными дверцами',
+      'Открытый дровник для дров',
+      'Мойка и закрывающиеся кухонные модули под столешницей'
+    ],
+    description: 'Барбекю-комплекс «Траттория» — летняя кухня с комплексом из светлого камня: две топки с чугунными дверцами, открытый дровник, мойка и закрывающиеся кухонные модули под единой столешницей.',
+    cover: 'assets/img/projects/barbekyu-kompleks-aleksandrovo-2/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-aleksandrovo-2/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-bavariya-klab',
+    title: 'Барбекю-комплекс «Бавария Клаб»',
+    shortTitle: 'Барбекю-комплекс «Бавария Клаб»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Пиццерия', 'Печь под казан', 'Летняя кухня'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в павильоне летней кухни' }
+    ],
+    features: [
+      'Печь-пиццерия со стеклянной дверцей',
+      'Плита под казан и гриль-зона',
+      'Дровник, мойка и кухонные модули'
+    ],
+    description: 'Барбекю-комплекс «Бавария Клаб» из кирпича для летней кухни: печь-пиццерия со стеклянной дверцей, плита под казан, гриль-зона, дровник, мойка и кухонные модули — рядом обеденная группа.',
+    cover: 'assets/img/projects/barbekyu-kompleks-bavariya-klab/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-bavariya-klab/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-belyj-bereg',
+    title: 'Барбекю-комплекс «Фарфор»',
+    shortTitle: 'Барбекю-комплекс «Фарфор»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Панорамная топка', 'Минимализм'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в стеклянном павильоне' }
+    ],
+    features: [
+      'Центральная топка с панорамным стеклом',
+      'Варочная поверхность и духовой шкаф',
+      'Столешницы и ниши по бокам'
+    ],
+    description: 'Барбекю-комплекс «Фарфор» в светлых тонах для стеклянного павильона: центральная топка с панорамным стеклом, варочная поверхность с духовым шкафом, боковые секции и столешницы.',
+    cover: 'assets/img/projects/barbekyu-kompleks-belyj-bereg/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-belyj-bereg/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-kamenniy',
+    title: 'Барбекю-комплекс «Тоскана»',
+    shortTitle: 'Барбекю-комплекс «Тоскана»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Каменный дымоход', 'Летняя кухня'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в помещении летней кухни' }
+    ],
+    features: [
+      'Дымоход, облицованный камнем',
+      'Две печи с чугунными дверцами',
+      'Столешницы с мойкой вдоль стен'
+    ],
+    description: 'Барбекю-комплекс «Тоскана» — летняя кухня с дымоходом, облицованным камнем: две печи с чугунными дверцами и столешницы с мойкой вдоль стен помещения.',
+    cover: 'assets/img/projects/barbekyu-kompleks-kamenniy/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-kamenniy/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-kupavna',
+    title: 'Барбекю-комплекс «Гранит»',
+    shortTitle: 'Барбекю-комплекс «Гранит»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Угловой', 'Печь под казан'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в беседке' }
+    ],
+    features: [
+      'Топка с панорамным стеклом',
+      'Печь под казан',
+      'Дровник, мойка и шкафы'
+    ],
+    description: 'Угловой барбекю-комплекс «Гранит» из кирпича и тёмного камня: топка с живым огнём, печь под казан, дровник, мойка и шкафы — для беседки с деревянным потолком.',
+    cover: 'assets/img/projects/barbekyu-kompleks-kupavna/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-kupavna/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-mihajlovskaya-sloboda',
+    title: 'Барбекю-комплекс «Очаг»',
+    shortTitle: 'Барбекю-комплекс «Очаг»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Угловой', 'Печь под казан'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в беседке' }
+    ],
+    features: [
+      'Камин-топка со стеклянной дверцей',
+      'Печь под казан',
+      'Дровник, мойка и шкафы'
+    ],
+    description: 'Угловой барбекю-комплекс «Очаг» из серого декоративного камня: камин-топка со стеклом, печь под казан, дровник, мойка и шкафы со столешницами.',
+    cover: 'assets/img/projects/barbekyu-kompleks-mihajlovskaya-sloboda/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-mihajlovskaya-sloboda/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-novogorsk',
+    title: 'Барбекю-комплекс «Гаучо»',
+    shortTitle: 'Барбекю-комплекс «Гаучо»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Тандыр', 'Печь под казан', 'Под навесом'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'под открытым навесом' }
+    ],
+    features: [
+      'Центральная топка со стеклом',
+      'Печь под казан и тандыр',
+      'Мойка и шкафы со столешницами'
+    ],
+    description: 'Открытый барбекю-комплекс «Гаучо» из тёмного камня под навесом: центральная топка со стеклом, плита под казан, тандыр, мойка и шкафы.',
+    cover: 'assets/img/projects/barbekyu-kompleks-novogorsk/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-novogorsk/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-ostrovok',
+    title: 'Барбекю-комплекс «Сардоникс»',
+    shortTitle: 'Барбекю-комплекс «Сардоникс»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Тандыр', 'Барная стойка'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'в беседке' }
+    ],
+    features: [
+      'Мангал-гриль с решёткой',
+      'Варочная поверхность и тандыр',
+      'Барная стойка и кухонные модули'
+    ],
+    description: 'Барбекю-комплекс «Сардоникс» в деревянной беседке: мангал-гриль с решёткой, варочная поверхность под казан, тандыр, барная стойка и кухонные модули.',
+    cover: 'assets/img/projects/barbekyu-kompleks-ostrovok/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-ostrovok/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
+  },
+
+  {
+    id: 'barbekyu-kompleks-vladimirovka',
+    title: 'Барбекю-комплекс «Патио»',
+    shortTitle: 'Барбекю-комплекс «Патио»',
+    type: 'Барбекю комплекс',
+    tags: ['Барбекю комплекс', 'Под навесом', 'Печь под казан'],
+    facts: [
+      { label: 'Тип сооружения', value: 'барбекю-комплекс' },
+      { label: 'Размещение', value: 'под открытым навесом' }
+    ],
+    features: [
+      'Варочная плита',
+      'Топка-камин со стеклом и печь под казан',
+      'Шкафы со столешницами'
+    ],
+    description: 'Барбекю-комплекс «Патио» из тёмного камня под навесом: варочная плита, топка-камин со стеклом, печь под казан и шкафы со столешницами.',
+    cover: 'assets/img/projects/barbekyu-kompleks-vladimirovka/cover.webp',
+    gallery: [
+      { src: 'assets/img/projects/barbekyu-kompleks-vladimirovka/cover.webp', caption: 'Барбекю-комплекс' }
+    ]
   }
 );

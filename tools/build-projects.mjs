@@ -94,7 +94,7 @@ for (const p of DATA) {
   <div class="container">
     <header class="section__head">
       <p class="section__eyebrow">Визуализации и чертежи</p>
-      <h2 class="section__title">Кликните по листу, чтобы открыть его в&nbsp;PDF</h2>
+      <h2 class="section__title">${p.pdfMode ? 'Кликните по листу, чтобы открыть его в&nbsp;PDF' : 'Фотографии проекта'}</h2>
     </header>
     <div class="pgal">
       ${p.gallery.map((g) => `
@@ -151,9 +151,9 @@ document.addEventListener('click', function (e) {
   const canonical = `${BASE}/projects/${p.id}`;
 
   /* Ключевые слова: название, тип, теги, габариты + общие фразы (10–20 шт.) */
-  const plural = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаражи', 'Навес': 'навесы' };
-  const gen = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаража', 'Навес': 'навеса' };
-  const acc = { 'Дом': 'дом', 'Баня': 'баню', 'Беседка': 'беседку', 'Гараж': 'гараж', 'Навес': 'навес' };
+  const plural = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаражи', 'Навес': 'навесы', 'Барбекю комплекс': 'барбекю-комплексы' };
+  const gen = { 'Дом': 'дома', 'Баня': 'бани', 'Беседка': 'беседки', 'Гараж': 'гаража', 'Навес': 'навеса', 'Барбекю комплекс': 'барбекю-комплекса' };
+  const acc = { 'Дом': 'дом', 'Баня': 'баню', 'Беседка': 'беседку', 'Гараж': 'гараж', 'Навес': 'навес', 'Барбекю комплекс': 'барбекю-комплекс' };
   const low = p.type.toLowerCase();
   const dims = (p.facts[0] && /габарит|площад/i.test(p.facts[0].label))
     ? p.facts[0].value.toLowerCase().replace(/\s*м$/, '').replace(/×/g, 'x')
@@ -246,7 +246,7 @@ document.addEventListener('click', function (e) {
 }
 
 /* ---------- статические страницы (технологии и пр.) ---------- */
-const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html', 'brus.html', 'kombinirovannye-doma.html', 'karkas.html', 'fundament-plita.html', 'fundament-lenta.html', 'fundament-svai.html'];
+const STATIC_PAGES = ['keramoblok.html', 'gazoblok.html', 'brus.html', 'kombinirovannye-doma.html', 'karkas.html', 'fundament-plita.html', 'fundament-lenta.html', 'fundament-svai.html', 'mangalnye-zony.html'];
 for (const sp of STATIC_PAGES) {
   if (fs.existsSync(path.join(ROOT, sp))) urls.push(BASE + '/' + sp.replace(/\.html$/, ''));
 }

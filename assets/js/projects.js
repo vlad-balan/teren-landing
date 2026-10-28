@@ -14,8 +14,9 @@
      Пустые категории не выводятся. ---------- */
   var catalogRoot = document.getElementById('projects-catalog');
   if (catalogRoot) {
-    var order = ['Дом', 'Баня', 'Беседка', 'Гараж', 'Навес'];
-    var labels = { 'Дом': 'Дома', 'Баня': 'Бани', 'Беседка': 'Беседки', 'Гараж': 'Гаражи', 'Навес': 'Навесы' };
+    var order = ['Дом', 'Баня', 'Беседка', 'Гараж', 'Навес', 'Барбекю комплекс'];
+    var labels = { 'Дом': 'Дома', 'Баня': 'Бани', 'Беседка': 'Беседки', 'Гараж': 'Гаражи', 'Навес': 'Навесы', 'Барбекю комплекс': 'Барбекю комплексы' };
+    var groupIds = { 'Барбекю комплекс': 'cat-bbq' };
     /* типы, которых нет в списке, не теряем — выводим в конце как есть */
     DATA.forEach(function (p) {
       if (order.indexOf(p.type) < 0) order.push(p.type);
@@ -32,7 +33,7 @@
         '<h3>' + p.shortTitle + '</h3>' +
         '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
         '<div class="proj-card__foot">' +
-        '<p class="proj-card__price">' + (p.price ? 'Строительство под ключ<b>' + p.price + '</b>' : 'Рабочая документация<b>' + p.facts[6].value + ' листов</b>') + '</p>' +
+        '<p class="proj-card__price">' + (p.price ? 'Строительство под ключ<b>' + p.price + '</b>' : (p.facts[6] ? 'Рабочая документация<b>' + p.facts[6].value + ' листов</b>' : 'Цена<b>по запросу</b>')) + '</p>' +
         '<a class="link-btn" href="projects/' + p.id + '">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
         '</div></div></article>'
       );
@@ -42,7 +43,7 @@
       var items = DATA.filter(function (p) { return p.type === type; });
       if (!items.length) return '';
       var label = labels[type] || type;
-      return '<section class="cat-group">' +
+      return '<section class="cat-group"' + (groupIds[type] ? ' id="' + groupIds[type] + '"' : '') + '>' +
         '<h2 class="cat-group__title">' + label + '</h2>' +
         '<div class="projects__grid">' + items.map(card).join('') + '</div>' +
         '</section>';
