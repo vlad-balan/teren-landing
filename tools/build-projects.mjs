@@ -226,9 +226,11 @@ document.addEventListener('click', function (e) {
   page = page.replace(/<link rel="canonical" href="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/, '');
   page = page.replace('</head>', seoHead + '\n</head>');
-  /* статику рендерит сборка — клиентские рендереры не нужны */
-  page = page.replace('<script src="assets/js/projects-data.js"></script>', '');
-  page = page.replace('<script src="assets/js/projects.js"></script>', '');
+  /* статику рендерит сборка — клиентские рендереры не нужны
+     (регулярка терпит версию кэша вида ?v=N) */
+  page = page.replace(/<script src="assets\/js\/projects-data\.js(\?v=\d+)?"><\/script>\s*/, '');
+  page = page.replace(/<script src="assets\/js\/projects-data-2\.js(\?v=\d+)?"><\/script>\s*/, '');
+  page = page.replace(/<script src="assets\/js\/projects\.js(\?v=\d+)?"><\/script>\s*/, '');
   /* страница лежит в /projects/ — пути делаем корневыми */
   page = page.replace(/href="assets\//g, 'href="/assets/');
   page = page.replace(/src="assets\//g, 'src="/assets/');

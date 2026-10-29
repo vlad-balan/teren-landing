@@ -61,7 +61,10 @@
 
   /* ---------- Страница проекта ---------- */
   var root = document.getElementById('project-root');
-  if (!root) return;
+  /* data-p-атрибуты есть только на рантаймовой project.html?id=…;
+     на статических страницах /projects/<id>.html этого блока нет — выходим,
+     чтобы не затирать свёрстанный сборкой контент */
+  if (!root || !document.querySelector('[data-p="cover"]')) return;
 
   var id = new URLSearchParams(location.search).get('id');
   var p = DATA.find(function (x) { return x.id === id; }) || DATA[0];

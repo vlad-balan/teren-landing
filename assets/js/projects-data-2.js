@@ -2,6 +2,7 @@
    Дополнительные проекты (подгружается после projects-data.js):
    window.TEREM_PROJECTS.push(...)
    ============================================================ */
+window.TEREM_PROJECTS = window.TEREM_PROJECTS || [];
 window.TEREM_PROJECTS.push(
   {
     id: 'tarychevo',
