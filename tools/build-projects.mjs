@@ -82,7 +82,7 @@ for (const p of DATA) {
         <div class="pd-tags">${p.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
         <h1>${esc(p.title)}</h1>
         <div class="pd-facts">${p.facts.map((f) => `<div class="pd-fact"><span>${esc(f.label)}</span><b>${esc(f.value)}</b></div>`).join('')}</div>
-        ${p.price ? `<div class="pd-price-line">Строительство под ключ — <b>${esc(p.price)}</b></div>` : ''}
+        ${p.price ? `<div class="pd-price-line">${p.priceLabel || 'Строительство под ключ'} — <b>${esc(p.price)}</b></div>` : ''}
       </div>
     </div>
     <p class="pd-desc">${esc(p.description)}</p>
@@ -112,7 +112,7 @@ for (const p of DATA) {
     <p class="section__lead" style="margin-bottom: 26px;">Адаптируем под ваши размеры и задачи, рассчитаем смету и построим по этому проекту под ключ.</p>
     ${p.price ? `
     <div class="pd-price">
-      <span>Строительство по этому проекту</span>
+      <span>${p.priceLabel || 'Строительство по этому проекту'}</span>
       <b>${esc(p.price)}</b>
     </div>
     <p class="pd-price-note">В расчёте учтены: ${esc(p.priceIncludes)}.</p>` : ''}
