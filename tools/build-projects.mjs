@@ -56,7 +56,65 @@ function fullUrl(p) {
 fs.mkdirSync(path.join(ROOT, 'projects'), { recursive: true });
 const urls = [BASE + '/', BASE + '/projects'];
 
+/* Перелинковка: технология и фундамент проекта по тегам и фактам */
+const TECH_MATCH = [
+  [/керамоблок/i, { page: 'keramoblok', text: 'строительство из керамоблока' }],
+  [/газоблок/i, { page: 'gazoblok', text: 'строительство из газоблока' }],
+  [/клееный брус|из бруса/i, { page: 'brus', text: 'строительство из бруса' }],
+  [/каркас/i, { page: 'karkas', text: 'каркасная технология строительства' }],
+];
+const FOUND_MATCH = [
+  [/плит/i, { page: 'fundament-plita', text: 'технология монолитной плиты' }],
+  [/лент/i, { page: 'fundament-lenta', text: 'ленточный фундамент' }],
+  [/свай|сваи/i, { page: 'fundament-svai', text: 'свайный фундамент' }],
+];
+
 for (const p of DATA) {
+  /* --- контекстные ссылки: технология + фундамент --- */
+  const wallText = (p.facts || []).filter(f => /стен|каркас|брус/i.test(f.label)).map(f => f.value).join(' ') + ' ' + (p.tags || []).join(' ');
+  const tech = TECH_MATCH.find(([re]) => re.test(wallText));
+  const foundFact = (p.facts || []).find(f => /фундамент/i.test(f.label));
+  const found = foundFact ? FOUND_MATCH.find(([re]) => re.test(foundFact.value)) : null;
+  const crossParts = [];
+  if (tech) crossParts.push(`<a href="/${tech[1].page}">${tech[1].text}</a>`);
+  if (found) crossParts.push(`<a href="/${found[1].page}">${found[1].text}</a>`);
+  const crossLinks = crossParts.length
+    ? `<p class="pd-crosslinks">Подробно о решениях этого проекта: ${crossParts.join(' · ')}.</p>`
+    : '';
+
+  /* --- похожие проекты той же категории (до 3 шт., с ценой в приоритете) --- */
+  const sameType = DATA.filter(o => o.id !== p.id && o.type === p.type);
+  const withPrice = sameType.filter(o => o.price);
+  const ordered = withPrice.concat(sameType.filter(o => !o.price));
+  const startIdx = Math.max(0, DATA.findIndex(o => o.id === p.id) - 1);
+  const rel = [];
+  for (let i = 0; i < ordered.length && rel.length < 3; i++) rel.push(ordered[(startIdx + i) % ordered.length]);
+  const relatedBlock = rel.length ? `
+<section class="section">
+  <div class="container">
+    <header class="section__head">
+      <p class="section__eyebrow">Похожие проекты</p>
+      <h2 class="section__title">Смотрите также</h2>
+    </header>
+    <div class="projects__grid">
+${rel.map((o) => `      <article class="proj-card reveal">
+        <a class="proj-card__media proj-card__media--img" href="${o.id}">
+          <img src="/${o.cover}" alt="${esc(o.shortTitle)}" loading="lazy">
+        </a>
+        <div class="proj-card__body">
+          <div class="proj-card__tags">${(o.tags || []).slice(0, 2).map((t) => `<span>${esc(t)}</span>`).join('')}</div>
+          <h3>${esc(o.shortTitle)}</h3>
+          <div class="proj-card__foot">
+            ${o.price ? `<p class="proj-card__price">${o.priceLabel || 'Строительство под ключ'}<b>${esc(o.price)}</b></p>` : ''}
+            <a class="link-btn" href="${o.id}">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </article>`).join('\n')}
+    </div>
+  </div>
+</section>
+` : '';
+
   const main = `
 <main>
 
@@ -87,6 +145,7 @@ for (const p of DATA) {
     </div>
     <p class="pd-desc">${esc(p.description)}</p>
     <ul class="pd-features">${p.features.map((f) => `<li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>${esc(f)}</li>`).join('')}</ul>
+    ${crossLinks}
   </div>
 </section>
 
@@ -106,6 +165,7 @@ for (const p of DATA) {
   </div>
 </section>
 
+${relatedBlock}
 <section class="section section--sand">
   <div class="container" style="text-align: center; max-width: 720px;">
     <h2 class="section__title">Хотите такой проект на своём участке?</h2>
@@ -181,6 +241,20 @@ document.addEventListener('click', function (e) {
   <link rel="canonical" href="${canonical}">
   <meta name="description" content="${esc(desc)}">
   <meta name="keywords" content="${esc(keywords)}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "${BASE}/#org",
+    "name": "Династия Дерева",
+    "description": "Строительство домов, бань, беседок, мангальных зон, навесов и гаражей под ключ в Москве и Московской области.",
+    "url": "${BASE}/",
+    "telephone": "+7 (999) 888-75-70",
+    "email": "Dinastiadereva@gmail.com",
+    "priceRange": "₽₽₽",
+    "areaServed": "Москва и Московская область"
+  }
+  </script>
   <meta property="og:title" content="${esc(p.title)} — проект с документацией">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:type" content="website">
@@ -224,7 +298,8 @@ document.addEventListener('click', function (e) {
   page = page.replace(/<meta name="description" content="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<meta name="keywords" content="[^"]*">(\r?\n)?/, '');
   page = page.replace(/<link rel="canonical" href="[^"]*">(\r?\n)?/, '');
-  page = page.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/, '');
+  page = page.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g, '');
+  page = page.replace(/<!-- (FAQPage|LocalBusiness) \(автогенерация\) -->\n?/g, '');
   page = page.replace('</head>', seoHead + '\n</head>');
   /* статику рендерит сборка — клиентские рендереры не нужны
      (регулярка терпит версию кэша вида ?v=N) */
@@ -270,8 +345,34 @@ fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
 console.log('• sitemap.xml (' + urls.length + ' URL)');
 
 /* ---------- robots.txt ---------- */
+/* ИИ-краулеры явно разрешены: контент сайта может использоваться
+   для ответов ИИ-поиска (Нейро, AI Overviews, ChatGPT, Perplexity) */
 const robots = `User-agent: *
 Disallow: /server/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: ${BASE}/sitemap.xml
 `;

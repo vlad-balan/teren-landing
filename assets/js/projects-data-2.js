@@ -220,7 +220,6 @@ window.TEREM_PROJECTS.push(
     cover: 'assets/img/projects/mozhaisk/cover.webp',
     gallery: [
       { src: 'assets/img/projects/mozhaisk/viz-1.webp', caption: 'Визуализация', sheet: 4 },
-      { src: 'assets/img/projects/mozhaisk/viz-2.webp', caption: 'Визуализация', sheet: 5 },
       { src: 'assets/img/projects/mozhaisk/viz-3.webp', caption: 'Визуализация', sheet: 6 },
       { src: 'assets/img/projects/mozhaisk/plan-size.webp', caption: 'Размерный план 1 этажа', sheet: 9 },
       { src: 'assets/img/projects/mozhaisk/plan-otdelka.webp', caption: 'План внутренней отделки 1 этажа', sheet: 15 }
