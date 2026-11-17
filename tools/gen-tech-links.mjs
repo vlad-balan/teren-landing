@@ -63,6 +63,8 @@ ${items.map(card).join('\n')}
 }
 
 const BARBEKU = DATA.filter(p => p.type === 'Барбекю комплекс').map(p => p.id);
+const BANI = DATA.filter(p => p.type === 'Баня' && p.price).map(p => p.id)
+  .concat(DATA.filter(p => p.type === 'Баня' && !p.price).map(p => p.id));
 
 const PAGES = {
   'karkas.html': {
@@ -84,6 +86,11 @@ const PAGES = {
     eyebrow: 'Примеры проектов', title: 'Проект из керамоблока',
     lead: 'Дом «Терра» 13,8×9,8 — керамоблок, фальцевая кровля, тёплый контур за 12 780 000 ₽.',
     ids: ['dom-keramoblok'],
+  },
+  'bani.html': {
+    eyebrow: 'Наши проекты', title: 'Бани под ключ — 12 проектов с ценами',
+    lead: 'Каждая баня построена по полному рабочему проекту: документация, смета и фиксированный срок в договоре.',
+    ids: BANI,
   },
   'mangalnye-zony.html': {
     eyebrow: 'Готовые проекты', title: 'Барбекю-комплексы с документацией',
@@ -119,8 +126,9 @@ const FUND_PAGES = {
 function insert(file, blockHtml) {
   const fp = path.join(ROOT, file);
   let html = fs.readFileSync(fp, 'utf8');
-  /* идемпотентность: убираем прошлую автогенерацию (любой из блоков) */
-  html = html.replace(/\n?<!-- =+ [^\n]*(АВТОГЕНЕРАЦИЯ|автогенерация)[^\n]*=+ -->\n?<section[\s\S]*?<\/section>\n?/g, '');
+  /* идемпотентность: убираем прошлую автогенерацию (любой из блоков);
+     \r? — файлы могут быть сохранены редактором с CRLF */
+  html = html.replace(/\r?\n?<!-- =+ [^\n\r]*(АВТОГЕНЕРАЦИЯ|автогенерация)[^\n\r]*=+ -->\r?\n?<section[\s\S]*?<\/section>\r?\n?/g, '');
   if (!blockHtml) { fs.writeFileSync(fp, html, 'utf8'); return; }
   if (!html.includes('</main>')) { console.error('НЕТ </main>: ' + file); process.exitCode = 1; return; }
   html = html.replace('</main>', blockHtml + '\n</main>');

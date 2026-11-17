@@ -48,6 +48,8 @@ const stripTags = (s) => decode(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').
 const SKIP = new Set(['404.html', 'admin.html', 'logo-concepts.html', 'logo-concepts-2.html', 'project.html']);
 
 const FAQ_ITEM_RE = /<details class="faq__item[^"]*"[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>/g;
+/* альтернативный формат FAQ (постоянно видимый): <p><b>Вопрос</b><br> Ответ</p> */
+const FAQ_SEO_RE = /<p><b>([^<]+)<\/b><br>\s*([\s\S]*?)<\/p>/g;
 
 let stats = { faq: 0, lb: 0 };
 for (const file of fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && !SKIP.has(f)).sort()) {
@@ -62,11 +64,19 @@ for (const file of fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && !SKIP
     const a = stripTags(m[2]);
     if (q && a) items.push({ q, a });
   }
+  if (!items.length) {
+    const seoBlock = html.match(/class="seo-faq"[^>]*>([\s\S]*?)<\/div>/);
+    if (seoBlock) for (const m of seoBlock[1].matchAll(FAQ_SEO_RE)) {
+      const q = stripTags(m[1]);
+      const a = stripTags(m[2]);
+      if (q && a) items.push({ q, a });
+    }
+  }
   /* убрать все существующие FAQPage-блоки (ручные и прошлую автогенерацию) */
   for (const b of html.matchAll(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g)) {
     if (b[0].includes('"FAQPage"')) html = html.replace(b[0], '');
   }
-  html = html.replace(/<!-- FAQPage \(автогенерация\) -->\n?/g, '');
+  html = html.replace(/<!-- FAQPage \(автогенерация\) -->\r?\n?/g, '');
   if (items.length) {
     const faqJson = JSON.stringify({
       '@context': 'https://schema.org',
