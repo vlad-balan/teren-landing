@@ -76,7 +76,7 @@ for (const file of fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && !SKIP
   for (const b of html.matchAll(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g)) {
     if (b[0].includes('"FAQPage"')) html = html.replace(b[0], '');
   }
-  html = html.replace(/<!-- FAQPage \(автогенерация\) -->\r?\n?/g, '');
+  html = html.replace(/[ \t]*<!-- FAQPage \(автогенерация\) -->\r?\n?/g, '');
   if (items.length) {
     const faqJson = JSON.stringify({
       '@context': 'https://schema.org',
