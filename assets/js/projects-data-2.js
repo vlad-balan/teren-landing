@@ -745,5 +745,6 @@ window.TEREM_PROJECTS.push(
     gallery: [
       { src: 'assets/img/projects/barbekyu-kompleks-vladimirovka/cover.webp', caption: 'Барбекю-комплекс' }
     ]
-  }
+  },
+
 );
