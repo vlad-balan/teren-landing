@@ -33,7 +33,7 @@
         '<h3>' + p.shortTitle + '</h3>' +
         '<ul class="proj-card__specs"><li>' + p.facts.slice(0, 3).map(function (f) { return f.value; }).join(' · ') + '</li></ul>' +
         '<div class="proj-card__foot">' +
-        '<p class="proj-card__price">' + (p.price ? 'Строительство под ключ<b>' + p.price + '</b>' : (p.facts[6] ? 'Рабочая документация<b>' + p.facts[6].value + ' листов</b>' : 'Цена<b>по запросу</b>')) + '</p>' +
+        '<p class="proj-card__price">' + (p.price ? 'Строительство под ключ<b>' + p.price + '</b>' : 'Проект<b>доступен к заказу</b>') + '</p>' +
         '<a class="link-btn" href="projects/' + p.id + '">Смотреть проект <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
         '</div></div></article>'
       );
